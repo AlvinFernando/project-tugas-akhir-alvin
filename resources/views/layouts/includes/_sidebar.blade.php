@@ -36,10 +36,10 @@
                                           <ul class="nav">
                                                 <li><a href="{{ route('materi.index') }}" class=""> <span>Manajemen Materi</span></a></li>
                                                 <li><a href="{{ route('agenda.index') }}" class=""><span>Agenda Kelas</span></a></li>
+                                                <li><a href="#" class=""><span>Manajemen Tugas Siswa</span></a></li>
                                           </ul>
                                     </div>
                               </li>
-
                         @endif
 
                         <!-- Jika Level User adalah Siswa -->
@@ -50,6 +50,7 @@
                                           <ul class="nav">
                                                 <li><a href="{{ route('halaman_mapel_siswa') }}" class=""> <span>Mata Pelajaran</span></a></li>
                                                 <li><a href="{{ route('agenda_siswa') }}" class=""><span>Agenda Siswa</span></a></li>
+                                                <li><a href="{{ route('list_mapel_siswa') }}" class=""><span>Tes</span></a></li>
                                           </ul>
                                     </div>
                               </li>

@@ -13,7 +13,7 @@
                   <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
                               <a href="#" class="dropdown-toggle mr-3" data-toggle="dropdown">
-                                    @if (Auth::user()->level == 'siswa')
+                                    @if (!Auth::user()->level == 'siswa')
                                           <img src="{{URL::to('images/'.Auth::user()->siswa['foto_profil']) }}"
                                           class="img-circle" alt="Avatar" style="width: 30px; height: 30px;">
                                     @else

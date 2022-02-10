@@ -26,6 +26,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:admin,kepsek,guru,siswa']], fun
       Route::get('/dashboards', 'DashboardController@index')->name('dashboards.index');
 });
 
+//Admin, Kepsek
 Route::group(['middleware' => ['auth', 'ceklevel:admin,kepsek']], function(){
       //Admin
       Route::resource('/admin', 'AdminController');
@@ -55,6 +56,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:admin,kepsek']], function(){
       Route::delete('/tahun_ajaran/{id}', 'TahunAjaranController@hapus')->name('tahun_ajaran.hapus');
 });
 
+//Guru
 Route::group(['middleware' => ['auth', 'ceklevel:guru']], function(){
       // Route::get('/daftar_mata_pelajaran', 'MapelController@daftar_mapel')->name('mapel_guru');
       Route::get('/guru/{guru}/biodata', 'GuruController@biodata_guru')->name('biodata_guru');
@@ -65,9 +67,13 @@ Route::group(['middleware' => ['auth', 'ceklevel:guru']], function(){
       Route::resource('/agenda', 'AgendaController');
 });
 
+//Siswa
 Route::group(['middleware' => ['auth', 'ceklevel:siswa']], function(){
     Route::get('/mymapel', 'MapelController@halaman_mapel_siswa')->name('halaman_mapel_siswa');
     Route::get('/mymapel/{id}/materi', 'MapelController@show_materi_siswa')->name('show_materi_siswa');
+
+    Route::get('/mapelsaya', 'MapelController@list_mapel_siswa')->name('list_mapel_siswa');
+
     //Agenda siswa
     Route::get('/agenda_siswa', 'AgendaController@index_siswa')->name('agenda_siswa');
     Route::get('/agenda_siswa/{id}/show', 'AgendaController@show_siswa')->name('agenda_siswa_show');

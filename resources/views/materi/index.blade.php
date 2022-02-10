@@ -70,13 +70,13 @@
                                                 </td>
                                                 <td>{{ $r->kelas['nama_kelas'] }}</td>
                                                 <td>
-                                                      <form action="{{ route('mapel.destroy', $r->id )}}" method="POST">
+                                                      <form action="{{ route('materi.destroy', $r->id )}}" method="POST">
                                                             @csrf
                                                             @method('delete')
                                                             <a href="{{ route('materi.show', $r->id) }}" class="btn btn-info btn-sm" style="width: 20px;">
                                                                   <i class="fas fa-eye fa-lg" aria-hidden="true" style="margin-left: -9px;"></i>
                                                             </a>
-                                                            <a href="{{ route('mapel.edit', $r->id ) }}" class="btn btn-warning btn-sm" style="width: 20px;">
+                                                            <a href="{{ route('materi.edit', $r->id ) }}" class="btn btn-warning btn-sm" style="width: 20px;">
                                                                   <i class="fas fa-edit fa-lg" aria-hidden="true" style="margin-left: -9px;"></i>
                                                             </a>
                                                             <button type="submit" class="btn btn-danger btn-sm" style="width: 20px;">

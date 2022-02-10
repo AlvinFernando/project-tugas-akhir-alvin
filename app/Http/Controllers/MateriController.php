@@ -136,6 +136,11 @@ class MateriController extends Controller
         return view('materi.show', compact('materi'));
     }
 
+    public function download($fileId){
+        $entry = Materi::where('file_id', '=', $fileId)->firstOrFail();
+        $pathToFile = storage_path()."file_materi_baru/".$entry->name;
+        return response()->download($pathToFile);
+    }
     /**
      * Show the form for editing the specified resource.
      *
@@ -145,6 +150,9 @@ class MateriController extends Controller
     public function edit($id)
     {
         //
+        $guru = Guru::where('user_id', auth()->user()->id)->first();
+        $mapels = Mapel::with('guru')->where('guru_id', $guru->id)->get();
+        $kelas = Kelas::all();
         $materi = Materi::where('users_id', Auth::user()->id)->with('files')->findOrFail($id);
         // //Guru yang Login
         // $guru = Guru::where('user_id', auth()->user()->id)->first();
@@ -158,7 +166,7 @@ class MateriController extends Controller
         // $kelas = Kelas::all();
 
 
-        return view('materi.edit', compact('materi'));
+        return view('materi.edit', compact('materi', 'kelas', 'guru', 'mapels'));
     }
 
     /**
@@ -187,16 +195,17 @@ class MateriController extends Controller
             'kelas_id' => 'required'
         ], $errors);
 
-        $materi = Materi::find($id);
+        $materi = Materi::findOrFail($id);
 
-        $materi = Materi::firstOrUpdate([
+        $materi_data = [
             'judul_materi' => $request->judul_materi,
             'mapel_id' =>  $request->mapel_id,
             'isi_materi' =>  $request->isi_materi,
             'kelas_id' =>  $request->kelas_id,
             'users_id' => Auth::id()
-        ]);
+        ];
 
+        Materi::whereId($id)->update($materi_data);
 
         if ($request->hasFile('file_materi')) {
             foreach ($request->file_materi as $file) {
@@ -210,7 +219,7 @@ class MateriController extends Controller
 
                 $file->storeAs($targetDir, $name, 'public');
 
-                FileUpload::update([
+                FileUpload::create([
                     'url'=>$url,
                     'file'=>$name,
                     'materi_id' => $materi->id,
@@ -218,11 +227,7 @@ class MateriController extends Controller
            }
         }
 
-        if ($materi) {
-            return redirect('materi')->with('success','Materi berhasil Diupload !!');
-        }else{
-            return redirect('materi')->with('error', 'Materi Sudah Ada!');
-        }
+        return redirect('materi')->with('success','Materi berhasil Diupdate !!');
     }
 
     /**
@@ -231,9 +236,11 @@ class MateriController extends Controller
      * @param  \App\Materi  $materi
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Materi $materi)
+    public function destroy($id)
     {
         //
-
+        $materi = Materi::findOrFail($id);
+        $materi->delete();
+        return redirect()->back()->with('success','Materi Berhasil Dihapus');
     }
 }

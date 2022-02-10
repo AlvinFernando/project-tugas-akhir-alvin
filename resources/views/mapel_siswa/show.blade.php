@@ -22,19 +22,30 @@
       <div class="row">
             <div class="col-bg-12">
                 <div class="col-sm-12">
-                    <div class="card">
-                        <div class="card-title bg-success">
-                              <h2 class="text-light">{{ $materi->judul_materi }}</h2>
-                              <h5 class="text-light">{{ $materi->created_at }} | {{ Auth::user()->name }}</h5>
+                    <div class="card" style="border-radius:20px">
+                        <div class="card-title bg-success rounded-lg">
+                              <h2 class="text-light" style="margin-left:20px;">{{ $materi->judul_materi }}</h2>
+                              <h5 class="text-light" style="margin-left:20px;">{{ $materi->created_at }} | {{ $materi->users->name }}</h5>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" style="margin-left:20px;">
                                 <h2>{!! $materi->isi_materi !!}</h2>
-                                @foreach ($materi->files as $file)
-                                    <p>
-                                        <a href="{{ 'storage/'.$file->url }}">  {{ $file->file }}</a>
-                                    </p>
-                                @endforeach
-                                Silahkan Download Materi Diatas !!
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="card">
+                                            <div class="card-title bg-danger" style="height:30px; padding:20px;">
+                                                <h4 class="text-light" style="margin-top:-10px;">Silahkan Download Materi Di Bawah Ini !!</h4>
+                                            </div>
+                                            <div class="card-body" style="background-color:beige;">
+                                                @foreach ($materi->files as $file)
+                                                    <p>
+                                                        <a href="{{ asset('/storage/'.$file->url) }}">  {{ $file->file }}</a>
+                                                    </p>
+                                                @endforeach
+                                            </div>
+                                        </div> 
+                                    </div>
+                                    <div class="col-sm-6"></div>
+                                </div>
                         </div>
                     </div>
                 </div>

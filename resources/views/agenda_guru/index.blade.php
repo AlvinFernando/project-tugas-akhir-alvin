@@ -53,30 +53,33 @@
                         <tbody>
                               <tr>
                                     @forelse ($agenda as $result => $r)
-                                          <tr>
-                                                <td>{{ $result + $agenda->firstitem() }}</td>
-                                                <td>{{ $r->judul }}</td>
-                                                <td>{!! $r->isi_agenda !!}</td>
-                                                <td>
-                                                      <form action="{{ route('agenda.destroy', $r->id )}}" method="POST">
+                                        {{-- Menampilkan agenda yang ditulis hanya user yang login saja --}}
+                                        @if ($r->user_id == Auth::user()->id)
+                                                <tr>
+                                                    <td>{{ $result + $agenda->firstitem() }}</td>
+                                                    <td>{{ $r->judul }}</td>
+                                                    <td>{!! $r->isi_agenda !!}</td>
+                                                    <td>
+                                                        <form action="{{ route('agenda.destroy', $r->id )}}" method="POST">
                                                             @csrf
                                                             @method('delete')
                                                             <a href="{{ route('agenda.show', $r->id) }}" class="btn btn-info btn-sm" style="width: 20px;">
-                                                                  <i class="fas fa-eye fa-lg" aria-hidden="true" style="margin-left: -9px;"></i>
+                                                                <i class="fas fa-eye fa-lg" aria-hidden="true" style="margin-left: -9px;"></i>
                                                             </a>
                                                             <a href="{{ route('agenda.edit', $r->id) }}" class="btn btn-warning btn-sm" style="width: 20px;">
-                                                                  <i class="fas fa-user-edit fa-lg" aria-hidden="true" style="margin-left: -8px;"></i>
+                                                                <i class="fas fa-user-edit fa-lg" aria-hidden="true" style="margin-left: -8px;"></i>
                                                             </a>
                                                             <button type="submit" class="btn btn-danger btn-sm" style="width: 20px;">
-                                                                  <i class="fas fa-trash-alt fa-lg" aria-hidden="true" style="margin-left: -7px;"></i>
+                                                                <i class="fas fa-trash-alt fa-lg" aria-hidden="true" style="margin-left: -7px;"></i>
                                                             </button>
-                                                      </form>
-                                                </td>
-                                          </tr>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                        @endif
                                     @empty
-                                          <tr>
-                                                <td colspan="4" align="center" bgcolor="#EEEEEE">Belum Ada agenda Yang Diisi</td>
-                                          </tr>
+                                        <tr>
+                                            <td colspan="4" align="center" bgcolor="#EEEEEE">Belum Ada agenda Yang Diisi</td>
+                                        </tr>
                                     @endforelse
                               </tr>
                         </tbody>

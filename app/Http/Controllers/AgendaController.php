@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Agenda;
+use App\User;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,7 @@ class AgendaController extends Controller
     public function index()
     {
         //
-        $agenda = Agenda::paginate(3);
+        $agenda = Agenda::with('users')->paginate(3);
         return view('agenda_guru.index', compact('agenda'));
     }
 

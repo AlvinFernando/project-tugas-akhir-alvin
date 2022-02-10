@@ -156,10 +156,20 @@ class MapelController extends Controller
     //     return view('mapel_guru.index', compact('mapels', 'kelas'));
     // }
 
+    public function list_mapel_siswa(Request $request)
+    {
+        // dd($request->all());
+        $siswa = Siswa::where('kelas_id', $request->kelas_id)->orWhere('user_id', auth()->user()->id)->firstOrFail();
+        // $kelas_id = ;
+        $mapels = Mapel::where('kelas_id', $request->kelas_id)->get();
+        return view('mapel_siswa.index_mapel', compact('mapels', 'siswa'));
+    }
+
     public function halaman_mapel_siswa()
     {
         // dd($request->all());
-        $siswa = Siswa::where('user_id', auth()->user()->id)->firstOrFail();
+        $kelas = Kelas::with('siswa')->first();
+        $siswa = Siswa::where('user_id', auth()->user()->id)->orWhere('kelas_id', $kelas->id)->get();
         $materi = Materi::with('files')->paginate(10);
         return view('mapel_siswa.index', compact('materi', 'siswa'));
     }
