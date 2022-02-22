@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Kelas;
+use App\User;
 use App\TahunAjaran;
 use Illuminate\Http\Request;
 use Yoeunes\Toastr\Facades\Toastr;
@@ -16,8 +17,10 @@ class KelasController extends Controller
      */
     public function index()
     {
+        //User yang sedang Login
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
         $kelas = Kelas::paginate(10);
-        return view('kelas.index', compact('kelas'));
+        return view('kelas.index', compact('kelas', 'userLogin'));
     }
 
     /**
@@ -27,8 +30,10 @@ class KelasController extends Controller
      */
     public function create()
     {
+        //User yang sedang Login
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
         $tahun_ajaran = TahunAjaran::all();
-        return view('kelas.create', compact('tahun_ajaran'));
+        return view('kelas.create', compact('tahun_ajaran', 'userLogin'));
     }
 
     /**

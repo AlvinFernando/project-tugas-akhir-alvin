@@ -2,7 +2,7 @@
 @section('sub-judul', 'Biodata | E-Learning SKPK')
 @section('panel-heading')
       <div class="panel-heading">
-            <h3 class="panel-title">@yield('sub-judul') - 
+            <h3 class="panel-title">@yield('sub-judul') -
                   @if (Auth::user()->level == 'guru')
                         <span class="label label-primary">Guru</span>
                   @endif
@@ -53,15 +53,15 @@
                                                 <div class="row">
                                                       <div class="col-md-12">
                                                             <div class="col-sm-2">
-                                                                  <img src="{{$guru->getProfile()}}" 
-                                                                  style="margin-left: 20px; width:90px; height: 90px;" 
+                                                                  <img src="{{$guru->getProfile()}}"
+                                                                  style="margin-left: 20px; width:90px; height: 90px;"
                                                                   class="img-circle" alt="Profile">
                                                             </div>
                                                             <div class="col-sm-10">
                                                                   <div class="bio">
                                                                         <h1 style="margin-top: -8px; font-size:44px;">
                                                                         @if ($guru->jk == 'Laki-Laki')
-                                                                            Mr. 
+                                                                            Mr.
                                                                         @else
                                                                             Miss
                                                                         @endif
@@ -85,7 +85,7 @@
                                                                                     <li>Kode Guru <span>{{ $guru->kode_guru }}</span></li>
                                                                                     <li>Nama Guru <span>{{ $guru->nama_guru }}</span></li>
                                                                                     <li>Email <span>{!! $guru->user['email'] !!}</span></li>
-                                                                                    <li>Jenis Kelamin 
+                                                                                    <li>Jenis Kelamin
                                                                                           @if ($guru->jk == 'Laki-Laki')
                                                                                                 <span class="label label-primary">{{ $guru->jk }}</span>
                                                                                           @else
@@ -99,7 +99,7 @@
                                                                         </div>
                                                                   </div>
                                                             </div>
-                                                            
+
                                                       </div>
                                                       <div class="col-md-6">
                                                             <div class="card">
@@ -112,7 +112,7 @@
                                                                                           <li>{{$mapel->nama_mapel}} - {{ $mapel->kelas['nama_kelas'] }}</li>
                                                                                     </ul>
                                                                               @endforeach
-                                                                              
+
                                                                         </div>
                                                                   </div>
                                                             </div>
@@ -121,7 +121,8 @@
                                           </div>
                                           <div class="icon-profil" style="margin-left: -125px;">
                                                 <a href="{{ url()->previous() }}" class="btn btn-default btn-md float-center" style="color: black">Cancel</a>
-                                                <a href="{{ route('guru.edit', $guru->id ) }}" class="btn btn-warning btn-md float-left">UBAH BIODATA</a>
+                                                <a href="{{ route('guru.edit_biodata_guru', Auth::user()->guru->id ) }}"
+                                                    class="btn btn-warning btn-md float-left">UBAH BIODATA</a>
                                           </div>
                                     </div>
                               </div>

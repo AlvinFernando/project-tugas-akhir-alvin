@@ -7,6 +7,7 @@ use App\Materi;
 use App\Mapel;
 use App\Guru;
 use App\Kelas;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
@@ -20,6 +21,8 @@ class MateriController extends Controller
      */
     public function index()
     {
+        //User yang sedang Login
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
         $materi = Materi::where('users_id', Auth::user()->id)->with('files')->paginate(10);
         // //Guru yang Login
         // $guru = Guru::where('user_id', auth()->user()->id)->first();
@@ -33,7 +36,7 @@ class MateriController extends Controller
         // $kelas = Kelas::all();
 
 
-        return view('materi.index', compact('materi'));
+        return view('materi.index', compact('materi', 'userLogin'));
     }
 
     /**
@@ -43,10 +46,12 @@ class MateriController extends Controller
      */
     public function create()
     {
+        //User yang sedang Login
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
         $guru = Guru::where('user_id', auth()->user()->id)->first();
-        $mapels = Mapel::with('guru')->where('guru_id', $guru->id)->get();
         $kelas = Kelas::all();
-        return view('materi.create', compact('kelas', 'guru', 'mapels'));
+        $mapels = Mapel::with('guru')->where('guru_id', $guru->id)->get();
+        return view('materi.create', compact('kelas', 'guru', 'mapels', 'userLogin'));
     }
 
     /**
@@ -132,8 +137,10 @@ class MateriController extends Controller
      */
     public function show($id)
     {
+        //User yang sedang Login
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
         $materi = Materi::findOrFail($id);
-        return view('materi.show', compact('materi'));
+        return view('materi.show', compact('materi', 'userLogin'));
     }
 
     public function download($fileId){
@@ -150,6 +157,8 @@ class MateriController extends Controller
     public function edit($id)
     {
         //
+        //User yang sedang Login
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
         $guru = Guru::where('user_id', auth()->user()->id)->first();
         $mapels = Mapel::with('guru')->where('guru_id', $guru->id)->get();
         $kelas = Kelas::all();
@@ -166,7 +175,7 @@ class MateriController extends Controller
         // $kelas = Kelas::all();
 
 
-        return view('materi.edit', compact('materi', 'kelas', 'guru', 'mapels'));
+        return view('materi.edit', compact('materi', 'kelas', 'guru', 'mapels', 'userLogin'));
     }
 
     /**

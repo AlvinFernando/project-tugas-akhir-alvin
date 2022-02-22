@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Pengumuman;
+use App\User;
 use Illuminate\Http\Request;
 
 class PengumumanController extends Controller
@@ -14,8 +15,10 @@ class PengumumanController extends Controller
      */
     public function index()
     {
+        //User yang sedang Login
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
         $pengumuman = Pengumuman::paginate(10);
-        return view('pengumuman.index', compact('pengumuman'));
+        return view('pengumuman.index', compact('pengumuman', 'userLogin'));
     }
 
     /**
@@ -25,7 +28,9 @@ class PengumumanController extends Controller
      */
     public function create()
     {
-        return view('pengumuman.create');
+        //User yang sedang Login
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
+        return view('pengumuman.create', 'userLogin');
     }
 
     /**
@@ -67,8 +72,10 @@ class PengumumanController extends Controller
     public function show($id)
     {
         //
+        //User yang sedang Login
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
         $pengumuman = Pengumuman::findOrFail($id);
-        return view('pengumuman.show', compact('pengumuman'));
+        return view('pengumuman.show', compact('pengumuman', 'userLogin'));
     }
 
     /**
@@ -79,8 +86,10 @@ class PengumumanController extends Controller
      */
     public function edit($id)
     {
+        //User yang sedang Login
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
         $pengumuman = Pengumuman::findOrFail($id);
-        return view('pengumuman.edit', compact('pengumuman'));
+        return view('pengumuman.edit', compact('pengumuman', 'userLogin'));
     }
 
     /**

@@ -13,13 +13,37 @@
                   <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
                               <a href="#" class="dropdown-toggle mr-3" data-toggle="dropdown">
-                                    @if (!Auth::user()->level == 'siswa')
-                                          <img src="{{URL::to('images/'.Auth::user()->siswa['foto_profil']) }}"
-                                          class="img-circle" alt="Avatar" style="width: 30px; height: 30px;">
-                                    @else
-                                          <img src="{{ asset('assets/img/default.jpg') }}"
-                                          class="img-circle" alt="Avatar" style="width: 30px; height: 30px;">
+                                    {{-- foto admin --}}
+                                    @if (Auth::user()->level == 'admin')
+                                        @if (Auth::user()->admin->foto_profil !== null)
+                                            <img src="{{ 'images/'.Auth::user()->admin->foto_profil }}"
+                                            class="img-circle" alt="foto profil" style="width: 30px; height: 30px;">
+                                        @else
+                                            <img src="{{ asset('images/default.jpg') }}"
+                                            class="img-circle" alt="foto profil" style="width: 30px; height: 30px;">
+                                        @endif
+
+                                    {{-- foto Guru --}}
+                                    @elseif (Auth::user()->level == 'guru')
+                                        @if (Auth::user()->guru->foto_profil !== null)
+                                            <img src="{{ 'images/'.Auth::user()->guru->foto_profil }}"
+                                            class="img-circle" alt="foto profil" style="width: 30px; height: 30px;">
+                                        @else
+                                            <img src="{{ asset('images/default.jpg') }}"
+                                            class="img-circle" alt="foto profil" style="width: 30px; height: 30px;">
                                     @endif
+
+                                    {{-- Foto Siswa --}}
+                                    @elseif (Auth::user()->level == 'siswa')
+                                        @if (Auth::user()->siswa->foto_profil !== null)
+                                            <img src="{{ 'images/'.Auth::user()->siswa->foto_profil }}"
+                                            class="img-circle" alt="foto profil" style="width: 30px; height: 30px;">
+                                        @else
+                                            <img src="{{ asset('images/default.jpg') }}"
+                                            class="img-circle" alt="foto profil" style="width: 30px; height: 30px;">
+                                        @endif
+                                    @endif
+
 
                                     <span>{{ Auth::user()->name }}</span>
                                     <i class="icon-submenu lnr lnr-chevron-down"></i>

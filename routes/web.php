@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -59,7 +59,10 @@ Route::group(['middleware' => ['auth', 'ceklevel:admin,kepsek']], function(){
 //Guru
 Route::group(['middleware' => ['auth', 'ceklevel:guru']], function(){
       // Route::get('/daftar_mata_pelajaran', 'MapelController@daftar_mapel')->name('mapel_guru');
-      Route::get('/guru/{guru}/biodata', 'GuruController@biodata_guru')->name('biodata_guru');
+      Route::get('/biodata/{user_id}', 'GuruController@biodata_guru')->name('biodata_guru');
+      Route::get('/biodata/{user_id}/edit_biodata', 'GuruController@edit_biodata_guru')->name('guru.edit_biodata_guru');
+      Route::post('/guru/update', 'GuruController@update_biodata_guru')->name('guru.update_biodata_guru');
+
       //Materi
       Route::resource('/materi', 'MateriController');
 
@@ -78,6 +81,5 @@ Route::group(['middleware' => ['auth', 'ceklevel:siswa']], function(){
     Route::get('/agenda_siswa', 'AgendaController@index_siswa')->name('agenda_siswa');
     Route::get('/agenda_siswa/{id}/show', 'AgendaController@show_siswa')->name('agenda_siswa_show');
 });
-
 
 Route::get('/home', 'HomeController@index')->name('home');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\KepalaSekolah;
+use App\User;
 use Illuminate\Http\Request;
 
 class KepalaSekolahController extends Controller
@@ -15,8 +16,10 @@ class KepalaSekolahController extends Controller
     public function index()
     {
         //
+        //User yang sedang Login
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
         $kepsek = KepalaSekolah::paginate(5);
-        return view('kepsek.index', compact('kepsek'));
+        return view('kepsek.index', compact('kepsek', 'userLogin'));
     }
 
     /**

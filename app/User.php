@@ -37,6 +37,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function siswa(){
+    	return $this->hasOne('App\Siswa');
+    }
+
     public function guru(){
     	return $this->hasOne('App\Guru');
     }

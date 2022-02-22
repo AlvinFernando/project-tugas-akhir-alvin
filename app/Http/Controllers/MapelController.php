@@ -7,6 +7,7 @@ use App\Kelas;
 use App\Materi;
 use App\Guru;
 use App\Siswa;
+use App\User;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -19,8 +20,10 @@ class MapelController extends Controller
      */
     public function index()
     {
+        //User yang sedang Login
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
         $mapel = Mapel::paginate(10);
-        return view('mapel.index', compact('mapel'));
+        return view('mapel.index', compact('mapel', 'userLogin'));
     }
 
     /**
@@ -30,9 +33,11 @@ class MapelController extends Controller
      */
     public function create()
     {
+        //User yang sedang Login
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
         $kelas = Kelas::all();
         $guru = Guru::all();
-        return view('mapel.create', compact('kelas', 'guru'));
+        return view('mapel.create', compact('kelas', 'guru', 'userLogin'));
     }
 
     /**
@@ -90,10 +95,12 @@ class MapelController extends Controller
      */
     public function edit($id)
     {
+        //User yang sedang Login
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
         $kelas = Kelas::all();
         $guru = Guru::all();
         $mapel = Mapel::findOrFail($id);
-        return view('mapel.edit', compact('mapel', 'kelas', 'guru'));
+        return view('mapel.edit', compact('mapel', 'kelas', 'guru', 'userLogin'));
     }
 
     /**
@@ -159,25 +166,33 @@ class MapelController extends Controller
     public function list_mapel_siswa(Request $request)
     {
         // dd($request->all());
-        $siswa = Siswa::where('kelas_id', $request->kelas_id)->orWhere('user_id', auth()->user()->id)->firstOrFail();
         // $kelas_id = ;
-        $mapels = Mapel::where('kelas_id', $request->kelas_id)->get();
-        return view('mapel_siswa.index_mapel', compact('mapels', 'siswa'));
+
+        //User yang sedang Login
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
+        $siswa = Siswa::where('user_id', auth()->user()->id)->first();
+        $mapels = Mapel::where('kelas_id', $siswa->kelas_id)->get();
+        $kelas = Kelas::all();
+        return view('mapel_siswa.index_mapel', compact('mapels', 'kelas', 'userLogin', 'siswa'));
     }
 
     public function halaman_mapel_siswa()
     {
         // dd($request->all());
+        //User yang sedang Login
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
         $kelas = Kelas::with('siswa')->first();
         $siswa = Siswa::where('user_id', auth()->user()->id)->orWhere('kelas_id', $kelas->id)->get();
         $materi = Materi::with('files')->paginate(10);
-        return view('mapel_siswa.index', compact('materi', 'siswa'));
+        return view('mapel_siswa.index', compact('materi', 'siswa', 'userLogin'));
     }
 
     public function show_materi_siswa($id)
     {
         //
+        //User yang sedang Login
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
         $materi = Materi::findOrFail($id);
-        return view('mapel_siswa.show', compact('materi'));
+        return view('mapel_siswa.show', compact('materi', 'userLogin'));
     }
 }

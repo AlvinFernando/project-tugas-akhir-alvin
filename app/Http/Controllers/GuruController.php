@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Guru;
 use App\Mapel;
+use App\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class GuruController extends Controller
@@ -17,8 +19,9 @@ class GuruController extends Controller
      */
     public function index()
     {
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
         $guru = Guru::paginate(10);
-        return view('guru.index', compact('guru'));
+        return view('guru.index', compact('guru', 'userLogin'));
     }
 
     /**
@@ -28,7 +31,8 @@ class GuruController extends Controller
      */
     public function create()
     {
-        return view('guru.create');
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
+        return view('guru.create', compact('userLogin'));
     }
 
     /**
@@ -61,18 +65,9 @@ class GuruController extends Controller
         $user->level = 'guru';
         $user->name = $request->nama_guru;
         $user->email = $request->email;
-        $user->password = Hash::make($request->password);
+        $user->password = bcrypt($request->password);
         $user->remember_token = Str::random(60);
         $user->save();
-
-
-        if($request->input('password')) {
-            $password = Hash::make($request->password);
-        }
-        else
-        {
-            $password = bcrypt('guru1234');
-        }
 
 
         $request->request->add([ 'user_id' => $user->id ]);
@@ -108,8 +103,10 @@ class GuruController extends Controller
      */
     public function edit($id)
     {
+        //User yang sedang Login
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
         $guru = Guru::findorfail($id);
-        return view('guru.edit', compact('guru'));
+        return view('guru.edit', compact('guru', 'userLogin'));
     }
 
     /**
@@ -159,25 +156,59 @@ class GuruController extends Controller
 
     public function profile($id){
 
+        //User yang sedang Login
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
         $user = \App\User::all();
         $guru = Guru::find($id);
         $mapel = Mapel::all();
         return view('guru.profile', [
             'guru' => $guru,
             'mapel' => $mapel,
-            'user' => $user
+            'user' => $user,
+            'userLogin' => $userLogin
         ]);
     }
 
-    public function biodata_guru($id){
-
+    public function biodata_guru(){
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
         $guru = Guru::where('user_id', auth()->user()->id)->first();
         $user = \App\User::all();
         $mapel = Mapel::all();
         return view('guru.biodata', [
             'guru' => $guru,
             'mapel' => $mapel,
-            'user' => $user
+            'user' => $user,
+            'userLogin' => $userLogin
         ]);
+    }
+
+    public function edit_biodata_guru(){
+        //User yang sedang Login
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
+        $guru = Guru::where('user_id', auth()->user()->id)->first();
+        return view('guru.edit_biodata_guru', compact('guru', 'userLogin'));
+    }
+
+    public function update_biodata_guru(Request $request, $id){
+        //User yang sedang Login
+        $this->validate($request, [
+            'kode_guru' => 'required|max:12',
+            'nama_guru' => 'required|min:3',
+            'jk' => 'required',
+            'agama' => 'required',
+            'alamat' => 'required|min:8|max:100',
+            'no_telp' => 'required|numeric'
+        ]);
+
+        $guru = Guru::where('user_id', auth()->user()->id)->first();;
+
+        $guru -> Update($request->all());
+        if($request->hasfile('foto_profil')){
+            $request->file('foto_profil')->move('images/', $request->file('foto_profil')->getClientOriginalName());
+            $guru->foto_profil = $request->file('foto_profil')->getClientOriginalName();
+            $guru->save();
+        }
+
+        return redirect('biodata_guru')->with('success','Biodata Anda Berhasil di Update');
     }
 }

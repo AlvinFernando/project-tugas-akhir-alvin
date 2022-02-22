@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Admin;
+use App\User;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -15,8 +16,11 @@ class AdminController extends Controller
     public function index()
     {
         //
+        //User yang sedang Login
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
+
         $admin = Admin::paginate(5);
-        return view('admin.index', compact('admin'));
+        return view('admin.index', compact('admin','userLogin'));
     }
 
     /**

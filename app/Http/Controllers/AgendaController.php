@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Agenda;
 use App\User;
-use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AgendaController extends Controller
 {
@@ -17,8 +17,10 @@ class AgendaController extends Controller
     public function index()
     {
         //
+        //User yang sedang Login
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
         $agenda = Agenda::with('users')->paginate(3);
-        return view('agenda_guru.index', compact('agenda'));
+        return view('agenda_guru.index', compact('agenda', 'userLogin'));
     }
 
     /**
@@ -29,7 +31,9 @@ class AgendaController extends Controller
     public function create()
     {
         //
-        return view('agenda_guru.create');
+        //User yang sedang Login
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
+        return view('agenda_guru.create', compact('userLogin'));
     }
 
     /**
@@ -41,6 +45,7 @@ class AgendaController extends Controller
     public function store(Request $request)
     {
         //
+
         $errors = [
             'required' => ':attribute wajib diisi !',
             'min' => ':attribute harus diisi dengan minimal :min karakter !',
@@ -56,7 +61,7 @@ class AgendaController extends Controller
         $agenda = Agenda::create([
             'judul' => $request->judul,
             'isi_agenda' =>  $request->isi_agenda,
-            'user_id' => Auth::id()
+            'user_id' => Auth::user()->id,
         ]);
 
         return redirect('agenda')->with('success','Agenda Telah Diinput !!');
@@ -71,6 +76,7 @@ class AgendaController extends Controller
     public function show(Agenda $agenda)
     {
         //
+
     }
 
     /**
@@ -82,8 +88,10 @@ class AgendaController extends Controller
     public function edit($id)
     {
         //
+        //User yang sedang Login
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
         $agenda = Agenda::findOrFail($id);
-        return view('agenda_guru.edit', compact('agenda'));
+        return view('agenda_guru.edit', compact('agenda', 'userLogin'));
     }
 
     /**
@@ -96,6 +104,7 @@ class AgendaController extends Controller
     public function update(Request $request, $id)
     {
         //
+
         $errors = [
             'required' => ':attribute wajib diisi !',
             'min' => ':attribute harus diisi dengan minimal :min karakter !',
@@ -111,7 +120,7 @@ class AgendaController extends Controller
         $agenda = Agenda::findOrFail($id)->update([
             'judul' => $request->judul,
             'isi_agenda' =>  $request->isi_agenda,
-            'kepsek' => Auth::id()
+            'kepsek' => Auth::user()->id,
         ]);
 
         return redirect('agenda')->with('success','agenda telah Diupdate !!');
@@ -126,6 +135,7 @@ class AgendaController extends Controller
     public function destroy($id)
     {
         //
+
         $agenda = Agenda::findorfail($id);
         $agenda->delete();
 
@@ -135,14 +145,18 @@ class AgendaController extends Controller
     public function index_siswa()
     {
         //
+        //User yang sedang Login
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
         $agenda = Agenda::paginate(3);
-        return view('agenda_siswa.index', compact('agenda'));
+        return view('agenda_siswa.index', compact('agenda', 'userLogin'));
     }
 
     public function show_siswa($id)
     {
         //
+        //User yang sedang Login
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
         $agenda = Agenda::findOrFail($id);
-        return view('agenda_siswa.show', compact('agenda'));
+        return view('agenda_siswa.show', compact('agenda', 'userLogin'));
     }
 }

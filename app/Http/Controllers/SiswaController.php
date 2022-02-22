@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Siswa;
 use App\Kelas;
 use App\Guru;
+use App\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -18,8 +19,10 @@ class SiswaController extends Controller
      */
     public function index()
     {
+        //User yang sedang Login
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
         $siswa = Siswa::paginate(10);
-        return view('siswa.index', compact('siswa'));
+        return view('siswa.index', compact('siswa', 'userLogin'));
     }
 
     /**
@@ -29,9 +32,11 @@ class SiswaController extends Controller
      */
     public function create()
     {
+        //User yang sedang Login
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
         $kelas = Kelas::all();
         $guru = Guru::all();
-        return view('siswa.create', compact('kelas', 'guru'));
+        return view('siswa.create', compact('kelas', 'guru', 'userLogin'));
     }
 
     /**
@@ -41,7 +46,7 @@ class SiswaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    { 
+    {
         $errors = [
             'required' => ':attribute wajib diisi !',
             'min' => ':attribute harus diisi dengan minimal :min karakter !',
@@ -86,7 +91,7 @@ class SiswaController extends Controller
         if($request->hasfile('foto_profil')){
             $request->file('foto_profil')->move('images/', $request->file('foto_profil')->getClientOriginalName());
             $siswa->foto_profil = $request->file('foto_profil')->getClientOriginalName();
-            $siswa->save(); 
+            $siswa->save();
         }
 
         return redirect('siswa')->with('success','Data Siswa Telah Diinput !!');
@@ -111,10 +116,12 @@ class SiswaController extends Controller
      */
     public function edit($id)
     {
+        //User yang sedang Login
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
         $siswa = Siswa::findorfail($id);
         $kelas = Kelas::all();
         $guru = Guru::all();
-        return view('siswa.edit', compact('siswa', 'kelas', 'guru'));
+        return view('siswa.edit', compact('siswa', 'kelas', 'guru', 'userLogin'));
     }
 
     /**

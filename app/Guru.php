@@ -20,9 +20,9 @@ class Guru extends Model
     public function getProfile(){
         if(!$this->foto_profil){
             return asset('assets/img/default.jpg');
-        } else{
-            return asset('images/'.$this->foto_profil);
         }
+        
+        return asset('images/'.$this->foto_profil);
     }
 
     public function user(){

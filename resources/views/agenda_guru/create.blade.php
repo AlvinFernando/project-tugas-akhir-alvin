@@ -1,5 +1,5 @@
 @extends('layouts.template')
-@section('sub-judul', 'Buat Pengumuman | E-Learning SKPK')
+@section('sub-judul', 'Buat Agenda | E-Learning SKPK')
 @section('panel-heading')
       <div class="panel-heading">
             <h3 class="panel-title">@yield('sub-judul') -
@@ -36,7 +36,7 @@
                                     <div class="card-body">
                                           <form action="{{ route('agenda.store') }}" method="POST" enctype="multipart/form-data"> <!-- memanggil controller create-->
                                                 {{csrf_field()}}
-                                                {{-- Judul pengumuman --}}
+                                                {{-- Judul Agenda --}}
                                                 <div class="form-group {{$errors->has('judul') ? ' has-error' : ''}}">
                                                       <label for="judul">Judul</label>
                                                       <input name ="judul" type="text" class="form-control"
@@ -47,9 +47,9 @@
                                                       <h5 style="margin-left: 20px; font-style: italic;">* Judul Agenda wajib diisi !</h5>
                                                 </div>
 
-                                                {{-- isi pengumuman --}}
+                                                {{-- isi Agenda --}}
                                                 <div class="form-group">
-                                                      <label for="isi_agenda">Isi Pengumuman</label>
+                                                      <label for="isi_agenda">Isi Agenda</label>
                                                       <textarea class="form-control" name="isi_agenda" id="isi_agenda"></textarea>
                                                 </div>
 

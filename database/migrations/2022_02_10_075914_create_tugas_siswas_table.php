@@ -14,7 +14,11 @@ class CreateTugasSiswasTable extends Migration
     public function up()
     {
         Schema::create('tugas_siswas', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
+            $table->string('judul');
+            $table->text('isi_tugas');
+            $table->integer('kelas_id');
+            $table->integer('users_id');
             $table->timestamps();
         });
     }

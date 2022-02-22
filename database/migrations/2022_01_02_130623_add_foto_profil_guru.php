@@ -14,7 +14,7 @@ class AddFotoProfilGuru extends Migration
     public function up()
     {
         Schema::table('guru', function (Blueprint $table) {
-            $table->char('foto_profil');      
+            $table->char('foto_profil')->nullable();      
         });
     }
 

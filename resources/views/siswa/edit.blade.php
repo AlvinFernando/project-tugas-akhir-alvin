@@ -2,7 +2,7 @@
 @section('sub-judul', 'Ubah Data Siswa | E-Learning SKPK')
 @section('panel-heading')
       <div class="panel-heading">
-            <h3 class="panel-title">@yield('sub-judul') - 
+            <h3 class="panel-title">@yield('sub-judul') -
                   @if (Auth::user()->level == 'guru')
                         <span class="label label-primary">Guru</span>
                   @endif
@@ -26,29 +26,31 @@
                               <form action="{{ route('siswa.update', $siswa->id) }}" method="POST" enctype="multipart/form-data"> <!-- memanggil controller create-->
                                     @csrf
                                     @method('PATCH')
-                                    <div class="row">
-                                          <div class="col-md-4">
-                                                <div class="form-group {{$errors->has('no_induk') ? ' has-error' : ''}}">
-                                                      <label for="no_induk">No Induk</label>
-                                                      <input name ="no_induk" type="text" class="form-control" value="{{ $siswa->no_induk }}">
-                                                      @if ($errors->has('no_induk'))
-                                                            <span class="help-block">{{$errors->first('no_induk')}}</span>
-                                                      @endif
-                                                      <h5 style="margin-left: 20px; font-style: italic;">* No Induk tidak boleh kosong !</h5> 
-                                                </div>
-                                          </div>
-                                          <div class="col-md-8">
-                                                <div class="form-group {{$errors->has('nama_siswa') ? ' has-error' : ''}}">
-                                                      <label for="nama_siswa">Nama siswa</label>
-                                                      <input name ="nama_siswa" type="text" class="form-control" 
-                                                      value="{{ $siswa->nama_siswa }}">
-                                                      @if ($errors->has('nama_siswa'))
-                                                            <span class="help-block">{{$errors->first('nama_siswa')}}</span>
-                                                      @endif      
-                                                      <h5 style="margin-left: 20px; font-style: italic;">* Nama siswa tidak boleh kosong !</h5> 
-                                                </div>
-                                          </div>
-                                    </div>
+                                    @if (Auth::user()->level == 'siswa')
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                    <div class="form-group {{$errors->has('no_induk') ? ' has-error' : ''}}">
+                                                        <label for="no_induk">No Induk</label>
+                                                        <input name ="no_induk" type="text" class="form-control" value="{{ $siswa->no_induk }}">
+                                                        @if ($errors->has('no_induk'))
+                                                                <span class="help-block">{{$errors->first('no_induk')}}</span>
+                                                        @endif
+                                                        <h5 style="margin-left: 20px; font-style: italic;">* No Induk tidak boleh kosong !</h5>
+                                                    </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                    <div class="form-group {{$errors->has('nama_siswa') ? ' has-error' : ''}}">
+                                                        <label for="nama_siswa">Nama siswa</label>
+                                                        <input name ="nama_siswa" type="text" class="form-control"
+                                                        value="{{ $siswa->nama_siswa }}">
+                                                        @if ($errors->has('nama_siswa'))
+                                                                <span class="help-block">{{$errors->first('nama_siswa')}}</span>
+                                                        @endif
+                                                        <h5 style="margin-left: 20px; font-style: italic;">* Nama siswa tidak boleh kosong !</h5>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    @endif
 
                                     <div class="row">
                                           <div class="col-md-6">
@@ -97,7 +99,7 @@
                                                       @if ($errors->has('jk'))
                                                             <span class="help-block">{{$errors->first('jk')}}</span>
                                                       @endif
-                                                      <h5 style="margin-left: 20px; font-style: italic;">* Pilih Jenis Kelamin !</h5> 
+                                                      <h5 style="margin-left: 20px; font-style: italic;">* Pilih Jenis Kelamin !</h5>
                                                 </div>
                                           </div>
                                           <div class="col-md-3">
@@ -115,7 +117,7 @@
                                                       @if ($errors->has('agama'))
                                                             <span class="help-block">{{$errors->first('agama')}}</span>
                                                       @endif
-                                                      <h5 style="margin-left: 20px; font-style: italic;">* Agama wajib dipilih !</h5> 
+                                                      <h5 style="margin-left: 20px; font-style: italic;">* Agama wajib dipilih !</h5>
                                                 </div>
                                                 <!-- End Combo Box -->
                                           </div>
@@ -125,8 +127,8 @@
                                                       <input name ="no_telp" type="text" class="form-control" value="{{ $siswa->no_telp }}">
                                                       @if ($errors->has('no_telp'))
                                                             <span class="help-block">{{$errors->first('no_telp')}}</span>
-                                                      @endif 
-                                                      <h5 style="margin-left: 20px; font-style: italic;">* Isi No Telepon dengan Benar !</h5> 
+                                                      @endif
+                                                      <h5 style="margin-left: 20px; font-style: italic;">* Isi No Telepon dengan Benar !</h5>
                                                 </div>
                                           </div>
                                     </div>
@@ -138,8 +140,8 @@
                                                 <textarea name ="alamat" class="form-control" id="exampleFormControlTextarea1" rows="3">{{ $siswa->alamat }}</textarea>
                                                 @if ($errors->has('alamat'))
                                                       <span class="help-block">{{$errors->first('alamat')}}</span>
-                                                @endif 
-                                                <h5 style="margin-left: 20px; font-style: italic;">* Alamat Wajib Diisi, min. 8 karakter dan maks. 100 karakter !</h5> 
+                                                @endif
+                                                <h5 style="margin-left: 20px; font-style: italic;">* Alamat Wajib Diisi, min. 8 karakter dan maks. 100 karakter !</h5>
                                                 </div>
                                           </div>
                                     </div>
