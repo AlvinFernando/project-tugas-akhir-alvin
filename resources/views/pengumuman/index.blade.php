@@ -2,7 +2,7 @@
 @section('sub-judul', 'Pengumuman | E-Learning SKPK')
 @section('panel-heading')
       <div class="panel-heading">
-            <h3 class="panel-title">@yield('sub-judul') - 
+            <h3 class="panel-title">@yield('sub-judul') -
                   @if (Auth::user()->level == 'guru')
                         <span class="label label-primary">Guru</span>
                   @endif
@@ -16,6 +16,9 @@
                         <span class="label label-warning">Kepala Sekolah</span>
                   @endif
             </h3>
+            <a href="/dashboards" class="back-hover">
+                <i class="fa fa-angle-left fa-lg"></i> Kembali Ke Dashboard
+            </a>
       </div>
 @stop
 @section('content')
@@ -24,7 +27,7 @@
             @foreach($errors->all() as $error)
                   <div class="alert alert-danger" role="alert">
                         {{ $error }}
-                  </div>  		
+                  </div>
             @endforeach
       @endif
 
@@ -36,7 +39,7 @@
                                     <h3>Pengumuman</h3>
                                     <div class="right">
                                           <a href="{{ route('pengumuman.create') }}" class="btn btn-sm btn-info">
-                                                <i class="fas fa-plus text-light"></i> 
+                                                <i class="fas fa-plus text-light"></i>
                                                 &nbsp;Tambah Pengumuman
                                           </a>
                                     </div>
@@ -53,12 +56,12 @@
                         </thead>
                         <tbody>
                               <tr>
-                                    @forelse ($pengumuman as $result => $r)
+                                    @forelse ($pengumumans as $result => $r)
                                           <tr>
-                                                <td>{{ $result + $pengumuman->firstitem() }}</td>
+                                                <td>{{ $result + $pengumumans->firstitem() }}</td>
                                                 <td>{{ $r->judul }}</td>
                                                 <td>{!! $r->isi_pengumuman !!}</td>
-                                                <td>{{ $r->kepsek }}</td>
+                                                <td>{{ $r->users->name }}</td>
                                                 <td>
                                                       <form action="{{ route('pengumuman.destroy', $r->id )}}" method="POST">
                                                             @csrf
@@ -83,8 +86,8 @@
                               </tr>
                         </tbody>
                   </table>
-                  {{ $pengumuman->links() }}
+                  {{ $pengumumans->links() }}
             </div>
       </div>
-      
+
 @endsection

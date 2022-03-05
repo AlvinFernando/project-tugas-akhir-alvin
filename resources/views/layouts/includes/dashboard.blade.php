@@ -21,12 +21,13 @@
             <div class="metric bg-primary">
                   <span class="icon"><i class="fa fa-book"></i></span>
                   <p>
-                        <span class="number">{{ $mapel->count() }}</span>
-                        <span class="title">Mata Pelajaran</span>
+                        <span class="number">{{ $kelas->count() }}</span>
+                        <span class="title">Kelas</span>
                   </p>
             </div>
       </div>
 @endif
+
 @if (Auth::user()->level == 'guru')
       <div class="col-md-3">
             <div class="metric bg-danger">
@@ -41,7 +42,7 @@
             <div class="metric bg-warning">
                   <span class="icon"><i class="fa fa-users"></i></span>
                   <p>
-                        <span class="number text-light" style="color: rgb(31, 31, 31)">{{ $mapel->count() }}</span>
+                        <span class="number text-light" style="color: rgb(31, 31, 31)">{{ $kelas->count() }}</span>
                         <span class="title text-light" style="color: rgb(31, 31, 31)">Mata Pelajaran</span>
                   </p>
             </div>

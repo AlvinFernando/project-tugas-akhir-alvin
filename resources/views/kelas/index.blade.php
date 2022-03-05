@@ -1,9 +1,25 @@
 @extends('layouts.template')
 @section('sub-judul', 'Data Kelas | E-Learning SKPK')
 @section('panel-heading')
-      <div class="panel-heading">
-            <h3 class="panel-title">@yield('sub-judul')</h3>
-      </div>
+    <div class="panel-heading">
+        <h3 class="panel-title">@yield('sub-judul') -
+            @if (Auth::user()->level == 'guru')
+                    <span class="label label-primary">Guru</span>
+            @endif
+            @if (Auth::user()->level == 'siswa')
+                    <span class="label label-danger">Siswa</span>
+            @endif
+            @if (Auth::user()->level == 'admin')
+                    <span class="label label-success">Admin</span>
+            @endif
+            @if (Auth::user()->level == 'kepsek')
+                    <span class="label label-warning">Kepala Sekolah</span>
+            @endif
+        </h3>
+        <a href="/dashboards" class="back-hover">
+            <i class="fa fa-angle-left fa-lg"></i> Kembali Ke Dashboard
+        </a>
+    </div>
 @stop
 @section('content')
 
@@ -11,7 +27,7 @@
             @foreach($errors->all() as $error)
                   <div class="alert alert-danger" role="alert">
                         {{ $error }}
-                  </div>  		
+                  </div>
             @endforeach
       @endif
 
@@ -23,7 +39,7 @@
                                     <h3>Data Kelas</h3>
                                     <div class="right">
                                           <a href="{{ route('kelas.create') }}" class="btn btn-sm btn-info">
-                                                <i class="fas fa-plus text-light"></i> 
+                                                <i class="fas fa-plus text-light"></i>
                                                 &nbsp;Tambah Kelas
                                           </a>
                                     </div>
@@ -48,7 +64,9 @@
                                                       <form action="{{ route('kelas.destroy', $r->id )}}" method="POST">
                                                             @csrf
                                                             @method('delete')
-                                                            <button type="submit" class="btn btn-sm btn-danger">Hapus</button> 
+                                                            <button type="submit" class="btn btn-sm btn-danger">
+                                                                <i class="fas fa-trash-alt fa-lg" aria-hidden="true"></i>
+                                                            </button>
                                                       </form>
                                                 </td>
                                           </tr>

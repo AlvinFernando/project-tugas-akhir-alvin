@@ -59,9 +59,9 @@ Route::group(['middleware' => ['auth', 'ceklevel:admin,kepsek']], function(){
 //Guru
 Route::group(['middleware' => ['auth', 'ceklevel:guru']], function(){
       // Route::get('/daftar_mata_pelajaran', 'MapelController@daftar_mapel')->name('mapel_guru');
-      Route::get('/biodata/{user_id}', 'GuruController@biodata_guru')->name('biodata_guru');
+      Route::get('/biodata', 'GuruController@biodata_guru')->name('biodata_guru');
       Route::get('/biodata/{user_id}/edit_biodata', 'GuruController@edit_biodata_guru')->name('guru.edit_biodata_guru');
-      Route::post('/guru/update', 'GuruController@update_biodata_guru')->name('guru.update_biodata_guru');
+      Route::put('/guru/update', 'GuruController@update_biodata_guru')->name('guru.update_biodata_guru');
 
       //Materi
       Route::resource('/materi', 'MateriController');
@@ -75,7 +75,9 @@ Route::group(['middleware' => ['auth', 'ceklevel:siswa']], function(){
     Route::get('/mymapel', 'MapelController@halaman_mapel_siswa')->name('halaman_mapel_siswa');
     Route::get('/mymapel/{id}/materi', 'MapelController@show_materi_siswa')->name('show_materi_siswa');
 
+    //materi siswa sesuai mapel
     Route::get('/mapelsaya', 'MapelController@list_mapel_siswa')->name('list_mapel_siswa');
+    Route::get('/mapelsaya/materi/{materi}', 'MapelController@list_materi_siswa')->name('list_materi_siswa');
 
     //Agenda siswa
     Route::get('/agenda_siswa', 'AgendaController@index_siswa')->name('agenda_siswa');

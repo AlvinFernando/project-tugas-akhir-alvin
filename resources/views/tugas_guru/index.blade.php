@@ -1,5 +1,5 @@
 @extends('layouts.template')
-@section('sub-judul', 'Agenda Siswa | E-Learning SKPK')
+@section('sub-judul', 'Tugas Siswa | E-Learning SKPK')
 @section('panel-heading')
       <div class="panel-heading">
             <h3 class="panel-title">@yield('sub-judul') -
@@ -36,44 +36,59 @@
                   <table class="table table-striped table-hover table-sm table-bordered">
                         <div class="row">
                               <div class="col-sm-12">
-                                    <h3>Agenda</h3>
+                                    <h3>Tugas Siswa</h3>
+                                    <div class="right">
+                                          <a href="#" class="btn btn-sm btn-info">
+                                                <i class="fas fa-plus text-light"></i>
+                                                &nbsp;Tambah Tugas
+                                          </a>
+                                    </div>
                               </div>
                         </div>
                         <thead>
                               <tr>
                                     <th scope="col">No</th>
-                                    <th scope="col">Judul</th>
-                                    <th scope="col">Isi</th>
+                                    <th scope="col">Mata Pelajaran</th>
+                                    <th scope="col">Kelas</th>
+                                    <th scope="col">Judul Tugas</th>
+                                    <th scope="col">Isi Tugas</th>
                                     <th scope="col">Aksi</th>
                               </tr>
                         </thead>
                         <tbody>
                               <tr>
-                                    @forelse ($agenda as $result => $r)
+                                    @forelse ($materi as $result => $r)
                                           <tr>
-                                                <td>{{ $result + $agenda->firstitem() }}</td>
-                                                <td>{{ $r->judul }}</td>
-                                                <td>{!! $r->isi_agenda !!}</td>
+                                                <td>1</td>
+                                                <td>Matematika</td>
+                                                <td>VI</td>
+                                                <td>PR Matematika</td>
+                                                <td>Mengerjakan Hal 13-15, dikumpulkan dalam bentuk foto</td>
                                                 <td>
-                                                      <form action="{{ route('agenda.destroy', $r->id )}}" method="POST">
+                                                      <form action="#" method="POST">
                                                             @csrf
                                                             @method('delete')
-                                                            <a href="{{ route('agenda_siswa_show', $r->id) }}" class="btn btn-info btn-sm" style="width: 20px;">
-                                                                  <i class="fas fa-eye fa-lg" aria-hidden="true" style="margin-left: -9px;"></i>
+                                                            <a href="#" class="btn btn-info btn-sm" style="width: 20px;">
+                                                                <i class="fas fa-eye fa-lg" aria-hidden="true" style="margin-left: -9px;"></i>
                                                             </a>
-
+                                                            <a href="#" class="btn btn-warning btn-sm" style="width: 20px;">
+                                                                <i class="fas fa-edit fa-lg" aria-hidden="true" style="margin-left: -9px;"></i>
+                                                            </a>
+                                                            <button type="submit" class="btn btn-danger btn-sm" style="width: 20px;">
+                                                                <i class="fas fa-trash-alt fa-lg" aria-hidden="true" style="margin-left: -9px;"></i>
+                                                            </button>
                                                       </form>
                                                 </td>
                                           </tr>
                                     @empty
                                           <tr>
-                                                <td colspan="4" align="center" bgcolor="#EEEEEE">Belum Ada agenda Yang Diisi</td>
+                                                <td colspan="8" align="center" bgcolor="#EEEEEE">Belum Ada Materi yang Diupload</td>
                                           </tr>
                                     @endforelse
                               </tr>
                         </tbody>
                   </table>
-                  {{ $agenda->links() }}
+                  {{ $materi->links() }}
             </div>
       </div>
 

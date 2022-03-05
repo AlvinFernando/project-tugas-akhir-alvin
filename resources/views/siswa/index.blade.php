@@ -2,7 +2,7 @@
 @section('sub-judul', 'Data Siswa | E-Learning SKPK')
 @section('panel-heading')
       <div class="panel-heading">
-            <h3 class="panel-title">@yield('sub-judul') - 
+            <h3 class="panel-title">@yield('sub-judul') -
                   @if (Auth::user()->level == 'guru')
                         <span class="label label-primary">Guru</span>
                   @endif
@@ -16,7 +16,11 @@
                         <span class="label label-warning">Kepala Sekolah</span>
                   @endif
             </h3>
+            <a href="/dashboards" class="back-hover">
+                <i class="fa fa-angle-left fa-lg"></i> Kembali Ke Dashboard
+            </a>
       </div>
+
 @stop
 @section('content')
 
@@ -24,19 +28,19 @@
             @foreach($errors->all() as $error)
                   <div class="alert alert-danger" role="alert">
                         {{ $error }}
-                  </div>  		
+                  </div>
             @endforeach
       @endif
-      
+
       <div class="row">
             <div class="col-md-12">
                   <table class="table table-striped table-hover table-sm table-bordered">
                         <div class="row">
                               <div class="col-sm-12">
                                     <h3>Data Siswa</h3>
-                                    <div class="right"> 
+                                    <div class="right">
                                           <a href="{{ route('siswa.create') }}" class="btn btn-sm btn-info">
-                                                <i class="fas fa-plus text-light"></i> 
+                                                <i class="fas fa-plus text-light"></i>
                                                 &nbsp;Tambah Data Siswa
                                           </a>
                                     </div>

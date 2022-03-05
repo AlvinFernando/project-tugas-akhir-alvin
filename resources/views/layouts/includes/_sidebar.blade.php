@@ -49,6 +49,7 @@
                                     <div id="subPages" class="collapse">
                                           <ul class="nav">
                                                 <li><a href="{{ route('halaman_mapel_siswa') }}" class=""> <span>Mata Pelajaran</span></a></li>
+                                                <li><a href="{{ route('list_mapel_siswa') }}" class=""> <span>Mata Pelajaran2</span></a></li>
                                                 <li><a href="{{ route('agenda_siswa') }}" class=""><span>Agenda Siswa</span></a></li>
                                                 <li><a href="{{ route('list_mapel_siswa') }}" class=""><span>Tes</span></a></li>
                                           </ul>

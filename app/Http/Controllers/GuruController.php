@@ -191,6 +191,7 @@ class GuruController extends Controller
 
     public function update_biodata_guru(Request $request, $id){
         //User yang sedang Login
+        dd($request);
         $this->validate($request, [
             'kode_guru' => 'required|max:12',
             'nama_guru' => 'required|min:3',
@@ -200,7 +201,9 @@ class GuruController extends Controller
             'no_telp' => 'required|numeric'
         ]);
 
-        $guru = Guru::where('user_id', auth()->user()->id)->first();;
+        $guru = Guru::where('user_id', auth()->user()->id)->first();
+        
+        $guru = Guru::find($id);
 
         $guru -> Update($request->all());
         if($request->hasfile('foto_profil')){
@@ -209,6 +212,6 @@ class GuruController extends Controller
             $guru->save();
         }
 
-        return redirect('biodata_guru')->with('success','Biodata Anda Berhasil di Update');
+        // return redirect('/biodata')->with('success','Biodata Anda Berhasil di Update');
     }
 }

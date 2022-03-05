@@ -7,6 +7,7 @@ use App\Materi;
 use App\Mapel;
 use App\Guru;
 use App\Kelas;
+use App\Siswa;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -251,5 +252,17 @@ class MateriController extends Controller
         $materi = Materi::findOrFail($id);
         $materi->delete();
         return redirect()->back()->with('success','Materi Berhasil Dihapus');
+    }
+
+    public function list_materi_siswa()
+    {
+        // dd($request->all());
+        //User yang sedang Login
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
+        $kelas = Kelas::with('siswa')->first();
+        $siswa = Siswa::where('user_id', auth()->user()->id)->orWhere('kelas_id', $kelas->id)->get();
+        $mapels = Mapel::where('kelas_id', $siswa->kelas_id)->get();
+        $materi = Materi::with(['files', 'kelas'])->where('kelas_id', $siswa->kelas_id)->orWhere('mapel_id', $mapels->id)->paginate(10);
+        return view('mapel_siswa.index_materi', compact('kelas','materi', 'siswa', 'userLogin', 'mapels'));
     }
 }

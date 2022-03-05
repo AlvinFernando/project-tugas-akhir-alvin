@@ -52,4 +52,5 @@ class User extends Authenticatable
     public function kepsek(){
     	return $this->hasOne('App\KepalaSekolah');
     }
+
 }

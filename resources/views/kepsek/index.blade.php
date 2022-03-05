@@ -2,7 +2,7 @@
 @section('sub-judul', 'Data Guru | E-Learning SKPK')
 @section('panel-heading')
       <div class="panel-heading">
-            <h3 class="panel-title">@yield('sub-judul') - 
+            <h3 class="panel-title">@yield('sub-judul') -
                   @if (Auth::user()->level == 'guru')
                         <span class="label label-primary">Guru</span>
                   @endif
@@ -16,7 +16,11 @@
                         <span class="label label-warning">Kepala Sekolah</span>
                   @endif
             </h3>
+            <a href="/dashboards" class="back-hover">
+                <i class="fa fa-angle-left fa-lg"></i> Kembali Ke Dashboard
+            </a>
       </div>
+
 @stop
 @section('content')
       <div class="row">
@@ -25,9 +29,9 @@
                         <div class="row">
                               <div class="col-sm-12">
                                     <h3>Data Kepala Sekolah</h3>
-                                    <div class="right"> 
+                                    <div class="right">
                                           <a href="{{ route('kepsek.create') }}" class="btn btn-sm btn-info">
-                                                <i class="fas fa-plus text-light"></i> 
+                                                <i class="fas fa-plus text-light"></i>
                                                 &nbsp;Tambah Data Kepala Sekolah
                                           </a>
                                     </div>

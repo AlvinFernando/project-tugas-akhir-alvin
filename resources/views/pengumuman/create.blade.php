@@ -54,7 +54,7 @@
                                                 </div>
 
                                                 {{-- kepsek --}}
-                                                <div class="form-group {{$errors->has('kepsek') ? ' has-error' : ''}}">
+                                                {{-- <div class="form-group {{$errors->has('kepsek') ? ' has-error' : ''}}">
                                                       <label for="exampleInputEmail1">Kepala Sekolah</label>
                                                       <input name ="kepsek" type="text" class="form-control" 
                                                       id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Kepala Sekolah">
@@ -62,7 +62,7 @@
                                                             <span class="help-block">{{$errors->first('kepsek')}}</span>
                                                       @endif      
                                                       <h5 style="margin-left: 20px; font-style: italic;">* Kepala Sekolah wajib diisi !</h5> 
-                                                </div>
+                                                </div> --}}
 
                                                 <div class="modal-footer">
                                                       <a href="{{ url()->previous() }}" class="btn btn-default" style="color: black">Cancel</a>

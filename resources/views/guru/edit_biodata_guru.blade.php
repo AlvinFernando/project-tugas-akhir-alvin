@@ -79,7 +79,7 @@
                                                     <div class="col-md-12">
                                                         <div class="card">
                                                                 <div class="card-body">
-                                                                    <form action="{{ route('guru.update_biodata_guru', Auth::user()->guru->id) }}" method="POST" enctype="multipart/form-data"> <!-- memanggil controller create-->
+                                                                    <form action="{{ route('guru.update_biodata_guru', $guru->id) }}" method="POST" enctype="multipart/form-data"> <!-- memanggil controller create-->
                                                                         @method('PATCH')
                                                                         {{csrf_field()}}
 
@@ -199,10 +199,10 @@
                                                                                 </div>
 
                                                                             </div>
-                                                                        </div>
-                                                                        <div class="icon-profil" style="margin-left: -125px;">
-                                                                            <a href="{{ url()->previous() }}" class="btn btn-default btn-md float-center" style="color: black">Cancel</a>
-                                                                            <button type="submit" class="btn btn-warning btn-md float-left">SUNTING BIODATA</button>
+                                                                            <div class="icon-profil" style="margin-left: -125px;">
+                                                                                <a href="{{ url()->previous() }}" class="btn btn-default btn-md float-center" style="color: black">Cancel</a>
+                                                                                <button type="submit" class="btn btn-warning btn-md float-left">SUNTING BIODATA</button>
+                                                                            </div>
                                                                         </div>
                                                                     </form>
                                                                 </div>

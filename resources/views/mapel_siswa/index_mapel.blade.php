@@ -9,12 +9,19 @@
     <div class="row">
         <div class="col-bg-12">
             <div class="container-fluid">
-                <ul>
-                    @foreach ($mapels as $mpl)
-                        <li>{{ $mpl->nama_mapel }} - {{ $mpl->kelas['nama_kelas'] }}</li>
-                    @endforeach
-                </ul>
-
+                @foreach ($mapels as $mpl)
+                    {{-- <a href="{{ route('list_materi_siswa', $mapels->id) }}"> --}}
+                        <a href="#">
+                            <div class="metric bg-success myhover" style="border-radius: 20px; width: 50%; align: center; margin-left: 225px;">
+                                <span class="icon" style="margin-top: -2px;"><i class="fas fa-book"></i></span>
+                                <p>
+                                    <span class="h3">{{ $mpl->nama_mapel }}</span>
+                                    <br>
+                                    <span style="font-size: 20px;">Kelas {{ $mpl->kelas['nama_kelas'] }}</span>
+                                </p>
+                            </div>
+                        </a>
+                @endforeach
             </div>
         </div>
     </div>

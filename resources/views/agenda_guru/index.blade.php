@@ -16,6 +16,9 @@
                         <span class="label label-warning">Kepala Sekolah</span>
                   @endif
             </h3>
+            <a href="/dashboards" class="back-hover">
+              <i class="fa fa-angle-left fa-lg"></i> Kembali Ke Dashboard
+            </a>
       </div>
 @stop
 @section('content')
@@ -43,38 +46,38 @@
                               </div>
                         </div>
                         <thead>
-                              <tr>
-                                    <th scope="col">No</th>
-                                    <th scope="col">Judul</th>
-                                    <th scope="col">Isi</th>
-                                    <th scope="col">Aksi</th>
-                              </tr>
+                            <tr>
+                                <th scope="col">No</th>
+                                <th scope="col">Judul</th>
+                                <th scope="col">Isi</th>
+                                <th scope="col">Aksi</th>
+                            </tr>
                         </thead>
                         <tbody>
                               <tr>
                                     @forelse ($agenda as $result => $r)
                                         {{-- Menampilkan agenda yang ditulis hanya user yang login saja --}}
                                         @if ($r->user_id == Auth::user()->id)
-                                                <tr>
-                                                    <td>{{ $result + $agenda->firstitem() }}</td>
-                                                    <td>{{ $r->judul }}</td>
-                                                    <td>{!! $r->isi_agenda !!}</td>
-                                                    <td>
-                                                        <form action="{{ route('agenda.destroy', $r->id )}}" method="POST">
-                                                            @csrf
-                                                            @method('delete')
-                                                            <a href="{{ route('agenda.show', $r->id) }}" class="btn btn-info btn-sm" style="width: 20px;">
-                                                                <i class="fas fa-eye fa-lg" aria-hidden="true" style="margin-left: -9px;"></i>
-                                                            </a>
-                                                            <a href="{{ route('agenda.edit', $r->id) }}" class="btn btn-warning btn-sm" style="width: 20px;">
-                                                                <i class="fas fa-user-edit fa-lg" aria-hidden="true" style="margin-left: -8px;"></i>
-                                                            </a>
-                                                            <button type="submit" class="btn btn-danger btn-sm" style="width: 20px;">
-                                                                <i class="fas fa-trash-alt fa-lg" aria-hidden="true" style="margin-left: -7px;"></i>
-                                                            </button>
-                                                        </form>
-                                                    </td>
-                                                </tr>
+                                            <tr>
+                                                <td>{{ $result + $agenda->firstitem() }}</td>
+                                                <td>{{ $r->judul }}</td>
+                                                <td>{!! $r->isi_agenda !!}</td>
+                                                <td>
+                                                    <form action="{{ route('agenda.destroy', $r->id )}}" method="POST">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <a href="{{ route('agenda.show', $r->id) }}" class="btn btn-info btn-sm" style="width: 20px;">
+                                                            <i class="fas fa-eye fa-lg" aria-hidden="true" style="margin-left: -9px;"></i>
+                                                        </a>
+                                                        <a href="{{ route('agenda.edit', $r->id) }}" class="btn btn-warning btn-sm" style="width: 20px;">
+                                                            <i class="fas fa-user-edit fa-lg" aria-hidden="true" style="margin-left: -8px;"></i>
+                                                        </a>
+                                                        <button type="submit" class="btn btn-danger btn-sm" style="width: 20px;">
+                                                            <i class="fas fa-trash-alt fa-lg" aria-hidden="true" style="margin-left: -7px;"></i>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
                                         @endif
                                     @empty
                                         <tr>

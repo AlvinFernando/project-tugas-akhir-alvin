@@ -8,6 +8,7 @@ use App\Materi;
 use App\Guru;
 use App\Siswa;
 use App\User;
+use App\FileUpload;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -192,7 +193,8 @@ class MapelController extends Controller
         //
         //User yang sedang Login
         $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
+        $filess = FileUpload::all();
         $materi = Materi::findOrFail($id);
-        return view('mapel_siswa.show', compact('materi', 'userLogin'));
+        return view('mapel_siswa.show', compact('materi', 'userLogin', 'filess'));
     }
 }

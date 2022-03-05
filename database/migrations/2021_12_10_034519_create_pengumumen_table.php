@@ -17,7 +17,7 @@ class CreatePengumumenTable extends Migration
             $table->bigIncrements('id');
             $table->string('judul');
             $table->text('isi_pengumuman');
-            $table->string('kepsek');
+            $table->integer('users_id');
             $table->timestamps();
         });
     }

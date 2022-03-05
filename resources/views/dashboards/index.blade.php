@@ -62,11 +62,13 @@
             <div class="col-md-12">
                   <!-- PANEL HEADLINE -->
                   <h3>PENGUMUMAN</h3>
-                  @forelse ($pengumuman as $umum)
+                  @forelse ($pengumumans as $umum)
                         <div class="panel panel-headline shadow p-3 mb-5 bg-white rounded">
                               <div class="panel-heading bg-primary">
                                     <h3 class="panel-title">{{ $umum->judul }}</h3>
-                                    <p class="panel-subtitle" style="color: white">{{ $umum->created_at }} | {{ $umum->kepsek }}</p>
+                                    <p class="panel-subtitle" style="color: white">
+                                        {{ $umum->created_at }} | {{ $umum->users->name }}
+                                    </p>
                               </div>
                               <div class="panel-body bg-snowwhite" style="background-color: whitesmoke">
                                     {!! $umum->isi_pengumuman !!}

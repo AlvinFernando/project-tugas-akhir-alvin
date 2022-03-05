@@ -15,8 +15,8 @@
                               <a href="#" class="dropdown-toggle mr-3" data-toggle="dropdown">
                                     {{-- foto admin --}}
                                     @if (Auth::user()->level == 'admin')
-                                        @if (Auth::user()->admin->foto_profil !== null)
-                                            <img src="{{ 'images/'.Auth::user()->admin->foto_profil }}"
+                                        @if (Auth::user()->admin->getProfile())
+                                            <img src="{{ Auth::user()->admin->getProfile() }}"
                                             class="img-circle" alt="foto profil" style="width: 30px; height: 30px;">
                                         @else
                                             <img src="{{ asset('images/default.jpg') }}"
@@ -25,8 +25,8 @@
 
                                     {{-- foto Guru --}}
                                     @elseif (Auth::user()->level == 'guru')
-                                        @if (Auth::user()->guru->foto_profil !== null)
-                                            <img src="{{ 'images/'.Auth::user()->guru->foto_profil }}"
+                                        @if (Auth::user()->guru->getProfile())
+                                            <img src="{{ Auth::user()->guru->getProfile() }}"
                                             class="img-circle" alt="foto profil" style="width: 30px; height: 30px;">
                                         @else
                                             <img src="{{ asset('images/default.jpg') }}"
@@ -35,8 +35,8 @@
 
                                     {{-- Foto Siswa --}}
                                     @elseif (Auth::user()->level == 'siswa')
-                                        @if (Auth::user()->siswa->foto_profil !== null)
-                                            <img src="{{ 'images/'.Auth::user()->siswa->foto_profil }}"
+                                        @if (Auth::user()->siswa->getProfile())
+                                            <img src="{{ Auth::user()->siswa->getProfile() }}"
                                             class="img-circle" alt="foto profil" style="width: 30px; height: 30px;">
                                         @else
                                             <img src="{{ asset('images/default.jpg') }}"

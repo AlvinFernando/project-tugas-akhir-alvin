@@ -19,7 +19,7 @@ class AgendaController extends Controller
         //
         //User yang sedang Login
         $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
-        $agenda = Agenda::with('users')->paginate(3);
+        $agenda = Agenda::with('users')->paginate(20);
         return view('agenda_guru.index', compact('agenda', 'userLogin'));
     }
 
@@ -120,7 +120,7 @@ class AgendaController extends Controller
         $agenda = Agenda::findOrFail($id)->update([
             'judul' => $request->judul,
             'isi_agenda' =>  $request->isi_agenda,
-            'kepsek' => Auth::user()->id,
+            'users_id' => Auth::user()->id,
         ]);
 
         return redirect('agenda')->with('success','agenda telah Diupdate !!');

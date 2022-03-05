@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Guru;
 use App\Siswa;
-use App\Mapel;
+use App\Kelas;
 use App\Materi;
 use App\Pengumuman;
 use App\User;
@@ -18,9 +18,9 @@ class DashboardController extends Controller
         $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
         $guru = Guru::all();
         $siswa = Siswa::all();
-        $mapel = Mapel::all();
+        $kelas = Kelas::all();
         $materi = Materi::all();
-        $pengumuman = Pengumuman::paginate(5);
-        return view('dashboards.index', compact('guru', 'siswa', 'mapel', 'pengumuman', 'materi', 'userLogin'));
+        $pengumumans = Pengumuman::paginate(5);
+        return view('dashboards.index', compact('guru', 'siswa', 'kelas', 'pengumumans', 'materi', 'userLogin'));
     }
 }

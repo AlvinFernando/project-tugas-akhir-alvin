@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Pengumuman;
 use App\User;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 class PengumumanController extends Controller
 {
     /**
@@ -17,8 +17,8 @@ class PengumumanController extends Controller
     {
         //User yang sedang Login
         $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
-        $pengumuman = Pengumuman::paginate(10);
-        return view('pengumuman.index', compact('pengumuman', 'userLogin'));
+        $pengumumans = Pengumuman::paginate(10);
+        return view('pengumuman.index', compact('pengumumans', 'userLogin'));
     }
 
     /**
@@ -30,7 +30,7 @@ class PengumumanController extends Controller
     {
         //User yang sedang Login
         $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
-        return view('pengumuman.create', 'userLogin');
+        return view('pengumuman.create', compact('userLogin'));
     }
 
     /**
@@ -51,13 +51,12 @@ class PengumumanController extends Controller
         $this->validate($request, [
             'judul' => 'required|max:70',
             'isi_pengumuman' => 'required',
-            'kepsek' => 'required'
         ], $errors);
 
-        $pengumuman = Pengumuman::create([
+        Pengumuman::create([
             'judul' => $request->judul,
             'isi_pengumuman' =>  $request->isi_pengumuman,
-            'kepsek' =>  $request->kepsek
+            'users_id' =>  Auth::user()->id
         ]);
 
         return redirect('pengumuman')->with('success','Data Mata Pelajaran Telah Diinput !!');
@@ -117,7 +116,7 @@ class PengumumanController extends Controller
         $pengumuman = Pengumuman::findOrFail($id)->update([
             'judul' => $request->judul,
             'isi_pengumuman' =>  $request->isi_pengumuman,
-            'kepsek' =>  $request->kepsek
+            'users_id' =>  Auth::user()->id
         ]);
 
         return redirect('pengumuman')->with('success','Pengumuman telah Diupdate !!');

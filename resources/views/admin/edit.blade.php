@@ -1,8 +1,8 @@
 @extends('layouts.template')
-@section('sub-judul', 'Ubah Data Guru | E-Learning SKPK')
+@section('sub-judul', 'Ubah Data Admin | E-Learning SKPK')
 @section('panel-heading')
       <div class="panel-heading">
-            <h3 class="panel-title">@yield('sub-judul') - 
+            <h3 class="panel-title">@yield('sub-judul') -
                   @if (Auth::user()->level == 'guru')
                         <span class="label label-primary">Guru</span>
                   @endif
@@ -23,109 +23,38 @@
             <div class="col-md-12">
                   <div class="card">
                         <div class="card-body">
-                              <form action="{{ route('guru.update', $guru->id) }}" method="POST" enctype="multipart/form-data"> <!-- memanggil controller create-->
+                              <form action="{{ route('admin.update', $admin->id) }}" method="POST" enctype="multipart/form-data"> <!-- memanggil controller create-->
                                     @method('PATCH')
                                     {{csrf_field()}}
                                     <div class="row">
                                           <div class="col-md-6">
                                                 <div class="form-group">
                                                       <label for="email">Email</label>
-                                                      <input type="email" class="form-control" name="email" value="{!! $guru->user['email'] !!}" readonly>
+                                                      <input type="email" class="form-control" name="email" value="{!! $admin->user['email'] !!}" readonly>
                                                 </div>
                                           </div>
                                           <div class="col-md-6">
                                                 <div class="form-group {{$errors->has('password') ? ' has-error' : ''}}">
                                                       <label for="password">Password</label>
-                                                      <input type="password" class="form-control" name="password" value="{!! $guru->user['password'] !!}" readonly>
+                                                      <input type="password" class="form-control" name="password" value="{!! $admin->user['password'] !!}" readonly>
                                                       @if ($errors->has('password'))
                                                             <span class="help-block"></span>
-                                                      @endif      
-                                                      <h5 style="margin-left: 20px; font-style: italic; color:darkgray;">* Silahkan Ubah passwordnya !</h5> 
+                                                      @endif
+                                                      <h5 style="margin-left: 20px; font-style: italic; color:darkgray;">* Silahkan Ubah passwordnya !</h5>
                                                 </div>
                                           </div>
                                     </div>
-                                    
+
                                     <div class="row">
-                                          <div class="col-md-3">
-                                                <div class="form-group">
-                                                      <label for="kode_guru">Kode Guru</label>
-                                                      <input name ="kode_guru" type="text" class="form-control" value="{{ $guru->kode_guru }}" readonly>
-                                                </div>
-                                          </div>
                                           <div class="col-md-9">
-                                                <div class="form-group {{$errors->has('nama_guru') ? ' has-error' : ''}}">
-                                                      <label for="nama_guru">Nama Guru</label>
-                                                      <input name ="nama_guru" type="text" class="form-control" 
-                                                      value="{{ $guru->nama_guru }}">
-                                                      @if ($errors->has('nama_guru'))
-                                                            <span class="help-block">{{$errors->first('nama_guru')}}</span>
-                                                      @endif      
-                                                      <h5 style="margin-left: 20px; font-style: italic;">* Ubah Nama Guru !</h5> 
-                                                </div>
-                                          </div>
-                                    </div>
-
-                                    <div class="row">
-                                          {{-- Jenis Kelamin --}}
-                                          <div class="col-md-3">
-                                                <!-- Combo Box -->
-                                                <div class="form-group {{$errors->has('jk') ? ' has-error' : ''}}">
-                                                      <label for="exampleFormControlSelect1">Pilih Jenis Kelamin</label>
-                                                      <select name ="jk" class="form-control" id="exampleFormControlSelect1">
-                                                            <option value="0" disabled="true" selected="true">== Jenis Kelamin ==</option>
-                                                            <option value="Laki-Laki" @if($guru->jk == 'Laki-Laki') selected @endif>Laki-Laki</option>
-                                                            <option value="Perempuan" @if($guru->jk == 'Perempuan') selected @endif>Perempuan</option>
-                                                      </select>
-                                                      @if ($errors->has('jk'))
-                                                            <span class="help-block">{{$errors->first('jk')}}</span>
+                                                <div class="form-group {{$errors->has('nama_admin') ? ' has-error' : ''}}">
+                                                      <label for="nama_admin">Nama admin</label>
+                                                      <input name ="nama_admin" type="text" class="form-control"
+                                                      value="{{ $admin->nama_admin }}">
+                                                      @if ($errors->has('nama_admin'))
+                                                            <span class="help-block">{{$errors->first('nama_admin')}}</span>
                                                       @endif
-                                                      <h5 style="margin-left: 20px; font-style: italic; color:darkgray;">* Pilih Jenis Kelamin !</h5> 
-                                                </div>
-                                          </div>
-
-                                          {{-- Agama --}}
-                                          <div class="col-md-3">
-                                                <div class="form-group {{$errors->has('agama') ? ' has-error' : ''}}">
-                                                      <label for="exampleFormControlSelect1">Agama</label>
-                                                      <select name ="agama" class="form-control" id="exampleFormControlSelect1">
-                                                            <option value="0" disabled="true" selected="true">== Agama ==</option>
-                                                            <option value="Islam" @if($guru->agama == 'Islam') selected @endif>Islam</option>
-                                                            <option value="Kristen" @if($guru->agama == 'Kristen') selected @endif>Kristen</option>
-                                                            <option value="Katholik" @if($guru->agama == 'Katholik') selected @endif>Katholik</option>
-                                                            <option value="Hindu" @if($guru->agama == 'Hindu') selected @endif>Hindu</option>
-                                                            <option value="Budha" @if($guru->agama == 'Budha') selected @endif>Budha</option>
-                                                            <option value="Kong Hu Chu" @if($guru->agama == 'Kong Hu Chu') selected @endif>Kong Hu Chu</option>
-                                                      </select>
-                                                      @if ($errors->has('agama'))
-                                                            <span class="help-block">{{$errors->first('agama')}}</span>
-                                                      @endif
-                                                      <h5 style="margin-left: 20px; font-style: italic; color:darkgray;">* Agama wajib dipilih !</h5> 
-                                                </div>
-                                                <!-- End Combo Box -->
-                                          </div>
-
-                                          {{-- No Telp --}}
-                                          <div class="col-md-6">
-                                                <div class="form-group {{$errors->has('no_telp') ? ' has-error' : ''}}">
-                                                      <label for="exampleInputEmail1">No Telp</label>
-                                                      <input name ="no_telp" type="text" class="form-control" value="{{ $guru->no_telp }}">
-                                                      @if ($errors->has('no_telp'))
-                                                            <span class="help-block">{{$errors->first('no_telp')}}</span>
-                                                      @endif 
-                                                      <h5 style="margin-left: 20px; font-style: italic; color:darkgray;">* Isi No Telepon dengan Benar !</h5> 
-                                                </div>
-                                          </div>
-                                    </div>
-
-                                    <div class="row">
-                                          <div class="col-md-12">
-                                                <div class="form-group {{$errors->has('alamat') ? ' has-error' : ''}}">
-                                                <label for="exampleFormControlTextarea1">Alamat</label>
-                                                <textarea name ="alamat" class="form-control" id="exampleFormControlTextarea1" rows="3">{{ $guru->alamat }}</textarea>
-                                                @if ($errors->has('alamat'))
-                                                      <span class="help-block">{{$errors->first('alamat')}}</span>
-                                                @endif 
-                                                <h5 style="margin-left: 20px; font-style: italic; color:darkgray;">* Alamat Wajib Diisi, min. 8 karakter dan maks. 100 karakter !</h5> 
+                                                      <h5 style="margin-left: 20px; font-style: italic;">* Ubah Nama admin !</h5>
                                                 </div>
                                           </div>
                                     </div>
