@@ -23,51 +23,54 @@ Route::get('/logout', 'AuthController@logout')->name('logout');
 
 
 Route::group(['middleware' => ['auth', 'ceklevel:admin,kepsek,guru,siswa']], function(){
-      Route::get('/dashboards', 'DashboardController@index')->name('dashboards.index');
+    Route::get('/dashboards', 'DashboardController@index')->name('dashboards.index');
 });
 
 //Admin, Kepsek
 Route::group(['middleware' => ['auth', 'ceklevel:admin,kepsek']], function(){
-      //Admin
-      Route::resource('/admin', 'AdminController');
+    //Admin
+    Route::resource('/admin', 'AdminController');
 
-      //Kepsek
-      Route::resource('/kepsek', 'KepalaSekolahController');
+    //Kepsek
+    Route::resource('/kepsek', 'KepalaSekolahController');
 
-      //Siswa
-      Route::resource('/siswa', 'SiswaController');
+    //Siswa
+    Route::resource('/siswa', 'SiswaController');
 
-      //Kelas
-      Route::resource('/kelas', 'KelasController');
+    //Kelas
+    Route::resource('/kelas', 'KelasController');
 
-      //Guru
-      Route::resource('/guru', 'GuruController');
-      Route::get('/guru/{guru}/profile', 'GuruController@profile')->name('profil_guru');
+    //Guru
+    Route::resource('/guru', 'GuruController');
+    Route::get('/guru/{guru}/profile', 'GuruController@profile')->name('profil_guru');
 
-      //Mata Pelajaran
-      Route::resource('/mapel', 'MapelController');
+    //Mata Pelajaran
+    Route::resource('/mapel', 'MapelController');
 
-      //Pengumuman
-      Route::resource('/pengumuman', 'PengumumanController');
+    //Pengumuman
+    Route::resource('/pengumuman', 'PengumumanController');
 
-      //TAHUN AJARAN
-      Route::get('/tahun_ajaran', 'TahunAjaranController@index')->name('tahun_ajaran.index');
-      Route::post('/tahun_ajaran', 'TahunAjaranController@input')->name('tahun_ajaran.input');
-      Route::delete('/tahun_ajaran/{id}', 'TahunAjaranController@hapus')->name('tahun_ajaran.hapus');
+    //TAHUN AJARAN
+    Route::get('/tahun_ajaran', 'TahunAjaranController@index')->name('tahun_ajaran.index');
+    Route::post('/tahun_ajaran', 'TahunAjaranController@input')->name('tahun_ajaran.input');
+    Route::delete('/tahun_ajaran/{id}', 'TahunAjaranController@hapus')->name('tahun_ajaran.hapus');
 });
 
 //Guru
 Route::group(['middleware' => ['auth', 'ceklevel:guru']], function(){
-      // Route::get('/daftar_mata_pelajaran', 'MapelController@daftar_mapel')->name('mapel_guru');
-      Route::get('/biodata', 'GuruController@biodata_guru')->name('biodata_guru');
-      Route::get('/biodata/{user_id}/edit_biodata', 'GuruController@edit_biodata_guru')->name('guru.edit_biodata_guru');
-      Route::put('/guru/update', 'GuruController@update_biodata_guru')->name('guru.update_biodata_guru');
+    // Route::get('/daftar_mata_pelajaran', 'MapelController@daftar_mapel')->name('mapel_guru');
+    Route::get('/biodata', 'GuruController@biodata_guru')->name('biodata_guru');
+    Route::get('/biodata/{guru}/edit_biodata', 'GuruController@edit_biodata_guru')->name('guru.edit_biodata_guru');
+    Route::patch('/biodata/{guru}/update', 'GuruController@update_biodata_gurus')->name('guru.update_biodata_guru');
 
-      //Materi
-      Route::resource('/materi', 'MateriController');
+    //Materi
+    Route::resource('/materi', 'MateriController');
 
-      //Agenda
-      Route::resource('/agenda', 'AgendaController');
+    //Agenda
+    Route::resource('/agenda', 'AgendaController');
+
+    //Tugas
+    Route::resource('/tugas_siswa', 'TugasSiswaController');
 });
 
 //Siswa
@@ -77,7 +80,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:siswa']], function(){
 
     //materi siswa sesuai mapel
     Route::get('/mapelsaya', 'MapelController@list_mapel_siswa')->name('list_mapel_siswa');
-    Route::get('/mapelsaya/materi/{materi}', 'MapelController@list_materi_siswa')->name('list_materi_siswa');
+    Route::get('/mapelsaya/materi/{id}', 'MateriController@halaman_materi_siswa')->name('halaman_materi_siswa');
 
     //Agenda siswa
     Route::get('/agenda_siswa', 'AgendaController@index_siswa')->name('agenda_siswa');

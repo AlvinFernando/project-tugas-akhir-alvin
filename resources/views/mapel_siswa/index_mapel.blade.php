@@ -3,6 +3,9 @@
 @section('panel-heading')
     <div class="panel-heading">
         <h3 class="panel-title">@yield('sub-judul')</h3>
+        <a href="/dashboards" class="back-hover">
+            <i class="fa fa-angle-left fa-lg"></i> Kembali Ke Dashboard
+        </a>
     </div>
 @stop
 @section('content')
@@ -11,13 +14,13 @@
             <div class="container-fluid">
                 @foreach ($mapels as $mpl)
                     {{-- <a href="{{ route('list_materi_siswa', $mapels->id) }}"> --}}
-                        <a href="#">
+                        <a href="{{ route('halaman_materi_siswa', $mpl->id) }}">
                             <div class="metric bg-success myhover" style="border-radius: 20px; width: 50%; align: center; margin-left: 225px;">
-                                <span class="icon" style="margin-top: -2px;"><i class="fas fa-book"></i></span>
+                                <span class="icon" style="margin-top: 4px; margin-left: 5px;"><i class="fas fa-book"></i></span>
                                 <p>
-                                    <span class="h3">{{ $mpl->nama_mapel }}</span>
+                                    <span class="h2">{{ $mpl->nama_mapel }}</span>
                                     <br>
-                                    <span style="font-size: 20px;">Kelas {{ $mpl->kelas['nama_kelas'] }}</span>
+                                    <span style="font-size: 25px;">Kelas {{ $mpl->kelas['nama_kelas'] }}</span>
                                 </p>
                             </div>
                         </a>

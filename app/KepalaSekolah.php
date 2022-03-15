@@ -12,4 +12,12 @@ class KepalaSekolah extends Model
     public function user(){
     	return $this->belongsto('App\User');
     }
+
+    public function getProfile(){
+        if(!$this->foto_profil){
+            return asset('assets/img/default.jpg');
+        }
+
+        return asset('images/'.$this->foto_profil);
+    }
 }

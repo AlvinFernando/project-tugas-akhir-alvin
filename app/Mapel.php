@@ -10,14 +10,18 @@ class Mapel extends Model
     protected $fillable = ['nama_mapel','kelas_id', 'guru_id'];
 
     public function kelas(){
-    	return $this->belongsTo('App\Kelas');
+    	return $this->belongsTo(Kelas::class);
     }
 
     public function guru(){
-    	return $this->belongsTo('App\Guru');
+    	return $this->belongsTo(Guru::class);
     }
 
     public function materi(){
-    	return $this->hasMany('App\Materi');
+    	return $this->hasMany(Materi::class);
+    }
+
+    public function tugas_siswa(){
+    	return $this->hasMany(TugasSiswa::class);
     }
 }

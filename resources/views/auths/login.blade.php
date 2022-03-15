@@ -12,12 +12,12 @@
 								<div class="logo text-center fnt mt-2">E-LEARNING SKPK</div>
 								<h6>SILAHKAN LOGIN TERLEBIH DAHULU</h6>
 								@if ($message = Session::get('error'))
-									<div class="alert alert-danger alert-block btn-sm"> 
+									<div class="alert alert-danger alert-block btn-sm">
 										<strong >{{ $message }}</strong>
-									</div>	
+									</div>
 								@endif
 								@if ($errors->has('email') && $errors->has('password'))
-									<div class="alert alert-danger alert-block btn-sm"> 
+									<div class="alert alert-danger alert-block btn-sm">
 										<strong >Masukkan Data Anda Dengan Benar !!</strong>
 									</div>
 								@endif
@@ -46,7 +46,7 @@
 									
 								</div>
 								<button type="submit" class="btn btn-primary btn-lg btn-block">LOGIN</button>
-								
+
 							</form>
 						</div>
 					</div>
@@ -64,5 +64,5 @@
 		</div>
 	</div>
 
-	
+
 @endsection

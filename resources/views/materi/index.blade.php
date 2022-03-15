@@ -53,6 +53,7 @@
                         <th scope="col">Isi Materi</th>
                         <th scope="col">File Materi</th>
                         <th scope="col">Kelas</th>
+                        <th scope="col">Tanggal</th>
                         <th scope="col">Aksi</th>
                     </tr>
                 </thead>
@@ -72,6 +73,7 @@
                                     @endforeach
                                 </td>
                                 <td>{{ $r->kelas['nama_kelas'] }}</td>
+                                <td>{{ $r->updated_at->diffForHumans() }}</td>
                                 <td>
                                     <form action="{{ route('materi.destroy', $r->id )}}" method="POST">
                                         @csrf

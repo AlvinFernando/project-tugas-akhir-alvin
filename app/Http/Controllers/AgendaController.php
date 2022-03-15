@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Agenda;
 use App\User;
+use App\Kelas;
+use App\Siswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,7 +21,7 @@ class AgendaController extends Controller
         //
         //User yang sedang Login
         $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
-        $agenda = Agenda::with('users')->paginate(20);
+        $agenda = Agenda::with('users')->paginate(10);
         return view('agenda_guru.index', compact('agenda', 'userLogin'));
     }
 
@@ -33,7 +35,8 @@ class AgendaController extends Controller
         //
         //User yang sedang Login
         $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
-        return view('agenda_guru.create', compact('userLogin'));
+        $kelas = Kelas::all();
+        return view('agenda_guru.create', compact('userLogin', 'kelas'));
     }
 
     /**
@@ -55,13 +58,15 @@ class AgendaController extends Controller
 
         $this->validate($request, [
             'judul' => 'required|max:70',
-            'isi_agenda' => 'required'
+            'isi_agenda' => 'required',
+            'kelas_id' => 'required',
         ], $errors);
 
-        $agenda = Agenda::create([
+        Agenda::create([
             'judul' => $request->judul,
             'isi_agenda' =>  $request->isi_agenda,
-            'user_id' => Auth::user()->id,
+            'kelas_id' =>  $request->kelas_id,
+            'users_id' => Auth::id(),
         ]);
 
         return redirect('agenda')->with('success','Agenda Telah Diinput !!');
@@ -73,10 +78,13 @@ class AgendaController extends Controller
      * @param  \App\Agenda  $agenda
      * @return \Illuminate\Http\Response
      */
-    public function show(Agenda $agenda)
+    public function show($id)
     {
-        //
-
+        //User yang sedang Login
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
+        $agenda = Agenda::findOrFail($id);
+        $kelas = Kelas::all();
+        return view('agenda_guru.show', compact('agenda', 'userLogin', 'kelas'));
     }
 
     /**
@@ -91,7 +99,8 @@ class AgendaController extends Controller
         //User yang sedang Login
         $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
         $agenda = Agenda::findOrFail($id);
-        return view('agenda_guru.edit', compact('agenda', 'userLogin'));
+        $kelas = Kelas::all();
+        return view('agenda_guru.edit', compact('agenda', 'userLogin', 'kelas'));
     }
 
     /**
@@ -114,13 +123,15 @@ class AgendaController extends Controller
 
         $this->validate($request, [
             'judul' => 'required',
-            'isi_agenda' => 'required'
+            'isi_agenda' => 'required',
+            'kelas_id' => 'required'
         ], $errors);
 
-        $agenda = Agenda::findOrFail($id)->update([
+        Agenda::findOrFail($id)->update([
             'judul' => $request->judul,
             'isi_agenda' =>  $request->isi_agenda,
-            'users_id' => Auth::user()->id,
+            'kelas_id' =>  $request->kelas_id,
+            'user_id' => Auth::user()->id,
         ]);
 
         return redirect('agenda')->with('success','agenda telah Diupdate !!');
@@ -142,13 +153,17 @@ class AgendaController extends Controller
         return redirect()->back()->with('success','agenda Berhasil Dihapus');
     }
 
+    /* ===================================================================================  */
+
     public function index_siswa()
     {
         //
         //User yang sedang Login
         $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
-        $agenda = Agenda::paginate(3);
-        return view('agenda_siswa.index', compact('agenda', 'userLogin'));
+        $siswa = Siswa::where('user_id', auth()->user()->id)->first();
+        $agenda = Agenda::with('kelas')->where('kelas_id', $siswa->kelas_id)->paginate(5);
+        $kelas = Kelas::all();
+        return view('agenda_siswa.index', compact('agenda', 'userLogin', 'siswa', 'kelas'));
     }
 
     public function show_siswa($id)

@@ -69,7 +69,6 @@ class GuruController extends Controller
         $user->remember_token = Str::random(60);
         $user->save();
 
-
         $request->request->add([ 'user_id' => $user->id ]);
 
         $guru = Guru::Create($request->all());
@@ -154,6 +153,8 @@ class GuruController extends Controller
         return redirect()->back()->with('success','Data Guru Berhasil Dihapus');
     }
 
+    /* ===================================================================================  */
+
     public function profile($id){
 
         //User yang sedang Login
@@ -172,7 +173,7 @@ class GuruController extends Controller
     public function biodata_guru(){
         $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
         $guru = Guru::where('user_id', auth()->user()->id)->first();
-        $user = \App\User::all();
+        $user = Auth::user();
         $mapel = Mapel::all();
         return view('guru.biodata', [
             'guru' => $guru,
@@ -185,13 +186,15 @@ class GuruController extends Controller
     public function edit_biodata_guru(){
         //User yang sedang Login
         $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
+        // $guru = Guru::where('user_id', auth()->user()->id)->first();
         $guru = Guru::where('user_id', auth()->user()->id)->first();
         return view('guru.edit_biodata_guru', compact('guru', 'userLogin'));
     }
 
-    public function update_biodata_guru(Request $request, $id){
+    public function update_biodata_gurus(Request $request){
         //User yang sedang Login
-        dd($request);
+        // dd();
+
         $this->validate($request, [
             'kode_guru' => 'required|max:12',
             'nama_guru' => 'required|min:3',
@@ -202,16 +205,22 @@ class GuruController extends Controller
         ]);
 
         $guru = Guru::where('user_id', auth()->user()->id)->first();
-        
-        $guru = Guru::find($id);
 
-        $guru -> Update($request->all());
+        $guru -> update([
+            'kode_guru' => $request->kode_guru,
+            'nama_guru' => $request->nama_guru,
+            'jk' => $request->jk,
+            'agama' => $request->agama,
+            'alamat' => $request->alamat,
+            'no_telp' => $request->no_telp
+        ]);
+
         if($request->hasfile('foto_profil')){
             $request->file('foto_profil')->move('images/', $request->file('foto_profil')->getClientOriginalName());
             $guru->foto_profil = $request->file('foto_profil')->getClientOriginalName();
             $guru->save();
         }
 
-        // return redirect('/biodata')->with('success','Biodata Anda Berhasil di Update');
+        return back()->with('success','Biodata Anda Berhasil di Update');
     }
 }

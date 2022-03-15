@@ -10,22 +10,22 @@ class Guru extends Model
     protected $fillable = ['kode_guru','nama_guru', 'jk', 'agama', 'alamat', 'no_telp', 'foto_profil', 'user_id'];
 
     public function mapel(){
-    	return $this->hasMany('App\Mapel');
+    	return $this->hasMany(Mapel::class);
     }
 
     public function siswa(){
-    	return $this->hasMany('App\Siswa');
+    	return $this->hasMany(Siswa::class);
     }
 
     public function getProfile(){
         if(!$this->foto_profil){
             return asset('assets/img/default.jpg');
         }
-        
+
         return asset('images/'.$this->foto_profil);
     }
 
     public function user(){
-    	return $this->belongsto('App\User');
+    	return $this->belongsto(User::class);
     }
 }

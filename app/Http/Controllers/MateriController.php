@@ -149,12 +149,14 @@ class MateriController extends Controller
         $pathToFile = storage_path()."file_materi_baru/".$entry->name;
         return response()->download($pathToFile);
     }
+
     /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Materi  $materi
      * @return \Illuminate\Http\Response
      */
+
     public function edit($id)
     {
         //
@@ -254,15 +256,29 @@ class MateriController extends Controller
         return redirect()->back()->with('success','Materi Berhasil Dihapus');
     }
 
-    public function list_materi_siswa()
+    /* ===================================================================================  */
+
+    // public function list_materi_siswa()
+    // {
+    //     // dd($request->all());
+    //     //User yang sedang Login
+    //     $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
+    //     $kelas = Kelas::with('siswa')->first();
+    //     $siswa = Siswa::where('user_id', auth()->user()->id)->orWhere('kelas_id', $kelas->id)->get();
+    //     $mapels = Mapel::where('kelas_id', $siswa->kelas_id)->get();
+    //     $materi = Materi::with(['files', 'kelas'])->where('kelas_id', $siswa->kelas_id)->orWhere('mapel_id', $mapels->id)->paginate(10);
+    //     return view('mapel_siswa.index_materi', compact('kelas','materi', 'siswa', 'userLogin', 'mapels'));
+    // }
+
+    public function halaman_materi_siswa($id)
     {
-        // dd($request->all());
+        // dd($request->all();
         //User yang sedang Login
         $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
-        $kelas = Kelas::with('siswa')->first();
-        $siswa = Siswa::where('user_id', auth()->user()->id)->orWhere('kelas_id', $kelas->id)->get();
-        $mapels = Mapel::where('kelas_id', $siswa->kelas_id)->get();
-        $materi = Materi::with(['files', 'kelas'])->where('kelas_id', $siswa->kelas_id)->orWhere('mapel_id', $mapels->id)->paginate(10);
-        return view('mapel_siswa.index_materi', compact('kelas','materi', 'siswa', 'userLogin', 'mapels'));
+        $mapels = Mapel::findOrFail($id);
+        $siswa = Siswa::where('user_id', auth()->user()->id)->first();
+        $materi = Materi::with('files')->where('kelas_id', $siswa->kelas_id)->orWhere('mapel_id', $mapels->id)->paginate(10);
+        $kelas = Kelas::all();
+        return view('mapel_siswa.index_materi', compact('materi', 'siswa', 'userLogin', 'mapels', 'kelas'));
     }
 }

@@ -53,7 +53,7 @@
                                                 <div class="row">
                                                       <div class="col-md-12">
                                                             <div class="col-sm-2">
-                                                                  <img src="{{$guru->getProfile()}}"
+                                                                  <img src="{{Auth::user()->guru->getProfile()}}"
                                                                   style="margin-left: 20px; width:90px; height: 90px;"
                                                                   class="img-circle" alt="Profile">
                                                             </div>

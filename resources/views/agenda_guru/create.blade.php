@@ -36,6 +36,20 @@
                                     <div class="card-body">
                                           <form action="{{ route('agenda.store') }}" method="POST" enctype="multipart/form-data"> <!-- memanggil controller create-->
                                                 {{csrf_field()}}
+                                                {{-- kelas --}}
+                                                <div class="form-group {{$errors->has('kelas_id') ? ' has-error' : ''}}">
+                                                    <label>Kelas</label>
+                                                    <select name ="kelas_id" class="form-control" id="exampleFormControlSelect1">
+                                                        <option value="0" disabled="true" selected="true">== Pilih Kelas ==</option>
+                                                        @foreach($kelas as $r)
+                                                                <option value="{{ $r->id }}" {{(old('kelas_id') == 'id') ? 'selected' : ''}}>{{ $r->nama_kelas }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @if ($errors->has('kelas_id'))
+                                                        <span class="help-block"></span>
+                                                    @endif
+                                                </div>
+
                                                 {{-- Judul Agenda --}}
                                                 <div class="form-group {{$errors->has('judul') ? ' has-error' : ''}}">
                                                       <label for="judul">Judul</label>

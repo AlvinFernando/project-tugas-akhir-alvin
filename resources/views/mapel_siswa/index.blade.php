@@ -29,6 +29,7 @@
                                 <th scope="col">Isi Materi</th>
                                 <th scope="col">File Materi</th>
                                 <th scope="col">Kelas</th>
+                                <th scope="col">Tanggal</th>
                                 <th scope="col">Aksi</th>
                           </tr>
                     </thead>
@@ -48,6 +49,7 @@
                                                 @endforeach
                                             </td>
                                             <td>{{ $r->kelas['nama_kelas'] }}</td>
+                                            <td>{{ $r->created_at->format('d, M Y H:i') }}</td>
                                             <td>
                                                 <a href="{{ route('show_materi_siswa', $r->id) }}" class="btn btn-info btn-sm" style="width: 20px;">
                                                     <i class="fas fa-eye fa-lg" aria-hidden="true" style="margin-left: -9px;"></i>

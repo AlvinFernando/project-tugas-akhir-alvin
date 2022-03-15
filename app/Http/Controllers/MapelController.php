@@ -164,18 +164,19 @@ class MapelController extends Controller
     //     return view('mapel_guru.index', compact('mapels', 'kelas'));
     // }
 
-    public function list_mapel_siswa(Request $request)
+    public function list_mapel_siswa()
     {
         // dd($request->all());
-        // $kelas_id = ;
-
+        //Button hijau dengan isi mapel siswa sesuai kelas
         //User yang sedang Login
         $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
         $siswa = Siswa::where('user_id', auth()->user()->id)->first();
+        //mapel sesuai kelas siswa yang sedang login
         $mapels = Mapel::where('kelas_id', $siswa->kelas_id)->get();
         $kelas = Kelas::all();
         return view('mapel_siswa.index_mapel', compact('mapels', 'kelas', 'userLogin', 'siswa'));
     }
+
 
     public function halaman_mapel_siswa()
     {

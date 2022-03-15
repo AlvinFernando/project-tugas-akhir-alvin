@@ -211,7 +211,7 @@
                                     </div>
 
                                     <div class="modal-footer">
-                                          <a href="{{ url()->previous() }}" class="btn btn-default" style="color: black">Cancel</a>
+                                          <a href="/siswa" class="btn btn-default" style="color: black">Cancel</a>
                                           <button type="submit" class="btn btn-success">Tambah</button>
                                     </div>
                               </form>

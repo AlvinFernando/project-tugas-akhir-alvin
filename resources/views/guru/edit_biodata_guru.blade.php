@@ -79,7 +79,7 @@
                                                     <div class="col-md-12">
                                                         <div class="card">
                                                                 <div class="card-body">
-                                                                    <form action="{{ route('guru.update_biodata_guru', $guru->id) }}" method="POST" enctype="multipart/form-data"> <!-- memanggil controller create-->
+                                                                    <form action="{{ route('guru.update_biodata_guru', Auth::user()->id) }}" method="POST" enctype="multipart/form-data"> <!-- memanggil controller create-->
                                                                         @method('PATCH')
                                                                         {{csrf_field()}}
 

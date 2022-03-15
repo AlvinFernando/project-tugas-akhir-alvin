@@ -36,7 +36,7 @@
                                                                 @if($mapel->id == $materi->mapel_id)
                                                                     selected
                                                                 @endif
-                                                            >{{ $mapel->nama_mapel }} - {{ $mapel->kelas['nama_kelas  '] }}</option>
+                                                            >{{ $mapel->nama_mapel }} - {{ $mapel->kelas['nama_kelas'] }}</option>
                                                         @endforeach
                                                 </select>
                                           </div>

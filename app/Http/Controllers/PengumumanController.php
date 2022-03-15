@@ -109,17 +109,16 @@ class PengumumanController extends Controller
 
         $this->validate($request, [
             'judul' => 'required|max:70',
-            'isi_pengumuman' => 'required',
-            'kepsek' => 'required'
+            'isi_pengumuman' => 'required'
         ], $errors);
 
-        $pengumuman = Pengumuman::findOrFail($id)->update([
+        Pengumuman::findOrFail($id)->update([
             'judul' => $request->judul,
             'isi_pengumuman' =>  $request->isi_pengumuman,
             'users_id' =>  Auth::user()->id
         ]);
 
-        return redirect('pengumuman')->with('success','Pengumuman telah Diupdate !!');
+        return redirect()->route('pengumuman.index')->with('success','Pengumuman telah Diupdate !!');
     }
 
     /**

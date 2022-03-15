@@ -1,5 +1,5 @@
 @extends('layouts.template')
-@section('sub-judul', 'Pengumuman | E-Learning SKPK')
+@section('sub-judul', 'Lihat Agenda | E-Learning SKPK')
 @section('panel-heading')
       <div class="panel-heading">
             <h3 class="panel-title">@yield('sub-judul')</h3>
@@ -8,9 +8,13 @@
 @section('content')
         <div class="row">
             <div class="col-md-12">
-                <div class="card">
-                    <div class="card-title bg-primary">
-                        <div class="container">{{ $agenda->judul }}</div>
+                <div class="panel panel-headline rounded">
+                    <div class="panel-heading bg-primary">
+                        <h1 class="text-light" style="margin-left:10px; margin-top: 4px;">{{ $agenda->judul }}</h1>
+                        <h4 class="text-light" style="margin-left:10px; ">{{ $agenda->updated_at->format('d M Y') }}</h4>
+                    </div>
+                    <div class="panel-body" style="margin-left:10px;">
+                        <p class="text-lg">{!! $agenda->isi_agenda !!}</p>
                     </div>
                 </div>
             </div>

@@ -25,13 +25,13 @@
                   <div class="card">
                         <div class="card-title bg-success">
                               <h2>{{ $materi->judul_materi }}</h2>
-                              <h5>{{ $materi->created_at }} | {{ Auth::user()->name }}</h5>
+                              <h5>{{ $materi->updated_at }} | {{ Auth::user()->name }}</h5>
                         </div>
                         <div class="card-body">
                                 <h2>{!! $materi->isi_materi !!}</h2>
                                 @foreach ($materi->files as $file)
                                     <p>
-                                        <a href="{{ 'storage/'.$file->url }}">  {{ $file->file }}</a>
+                                        <a href="{{ asset('storage/'.$file->url) }}">  {{ $file->file }}</a>
                                     </p>
                                 @endforeach
                         </div>

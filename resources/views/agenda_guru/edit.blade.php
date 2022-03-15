@@ -56,7 +56,7 @@
 
                                                 <div class="modal-footer">
                                                       <a href="{{ route('agenda.index') }}" class="btn btn-default" style="color: black">Cancel</a>
-                                                      <button type="submit" class="btn btn-success">Tambah</button>
+                                                      <button type="submit" class="btn btn-warning">Ubah</button>
                                                 </div>
                                           </form>
                                     </div>

@@ -73,16 +73,9 @@ class SiswaController extends Controller
         $user->level = 'siswa';
         $user->name = $request->nama_siswa;
         $user->email = $request->email;
-        $user->password = Hash::make($request->password);
+        $user->password = bcrypt($request->password);
         $user->remember_token = Str::random(60);
         $user->save();
-
-        if($request->input('password')) {
-            $password = Hash::make($request->password);
-        }
-        else{
-            $password = bcrypt('siswa1234');
-        }
 
         $request->request->add([ 'user_id' => $user->id ]);
 

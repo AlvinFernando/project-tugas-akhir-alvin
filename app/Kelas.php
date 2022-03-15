@@ -10,18 +10,26 @@ class Kelas extends Model
     protected $fillable = ['nama_kelas','tahun_ajaran_id'];
 
     public function tahun_ajaran(){
-    	return $this->belongsTo('App\TahunAjaran');
+    	return $this->belongsTo(TahunAjaran::class);
     }
 
     public function siswa(){
-    	return $this->hasMany('App\Siswa');
+    	return $this->hasMany(Siswa::class);
     }
 
     public function mapel(){
-    	return $this->hasMany('App\Mapel');
+    	return $this->hasMany(Mapel::class);
     }
 
     public function materi(){
-    	return $this->hasMany('App\Materi');
+    	return $this->hasMany(Materi::class);
+    }
+
+    public function tugas_siswa(){
+    	return $this->hasMany(TugasSiswa::class);
+    }
+
+    public function agenda(){
+    	return $this->hasMany(Agenda::class);
     }
 }

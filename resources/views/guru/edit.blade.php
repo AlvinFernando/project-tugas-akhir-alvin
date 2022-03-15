@@ -144,7 +144,7 @@
 
                                     <div class="modal-footer">
                                           <a href="{{ url()->previous() }}" class="btn btn-default" style="color: black">Cancel</a>
-                                          <button type="submit" class="btn btn-primary">Ubah</button>
+                                          <button type="submit" class="btn btn-warning">Ubah</button>
                                     </div>
                             </form>
                         </div>
