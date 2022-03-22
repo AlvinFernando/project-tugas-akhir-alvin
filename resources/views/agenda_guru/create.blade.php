@@ -1,23 +1,12 @@
 @extends('layouts.template')
 @section('sub-judul', 'Buat Agenda | E-Learning SKPK')
 @section('panel-heading')
-      <div class="panel-heading">
-            <h3 class="panel-title">@yield('sub-judul') -
-                  @if (Auth::user()->level == 'guru')
-                        <span class="label label-primary">Guru</span>
-                  @endif
-                  @if (Auth::user()->level == 'siswa')
-                        <span class="label label-danger">Siswa</span>
-                  @endif
-                  @if (Auth::user()->level == 'admin')
-                        <span class="label label-success">Admin</span>
-                  @endif
-                  @if (Auth::user()->level == 'kepsek')
-                        <span class="label label-warning">Kepala Sekolah</span>
-                  @endif
-            </h3>
-      </div>
-@stop
+    <div class="panel-heading">
+        <h3 class="panel-title">@yield('sub-judul')</h3>
+        <a href="/dashboards" class="back-hover">
+            <i class="fa fa-angle-left fa-lg"></i> Kembali Ke Dashboard
+        </a>
+    </div>
 @section('content')
 
       @if(count($errors)>0)

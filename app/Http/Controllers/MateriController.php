@@ -90,20 +90,22 @@ class MateriController extends Controller
 
         if ($request->hasFile('file_materi')) {
             foreach ($request->file_materi as $file) {
-                // $allFiles = collect();
+                // upload File
+                    // $allFiles = collect();
 
-                // foreach ($request->file('file_materi') as $file ) {
-                //     $file_exs = $file->getClientOriginalExtension();
+                    // foreach ($request->file('file_materi') as $file ) {
+                    //     $file_exs = $file->getClientOriginalExtension();
 
-                //     $file_baru = rand(123456, 999999). "." .$file_exs;
+                    //     $file_baru = rand(123456, 999999). "." .$file_exs;
 
-                //     $destination_path = public_path('/file_materi_baru');
+                    //     $destination_path = public_path('/file_materi_baru');
 
-                //     // $new_materi = time().$file->getClientOriginalName();
-                //     $file->move($destination_path, $file_baru);
-                //     $allFiles->push($file_baru);
-                // }
-                // Materi::where('id', $materi->id)->update(['file_materi'=> $allFiles]);
+                    //     // $new_materi = time().$file->getClientOriginalName();
+                    //     $file->move($destination_path, $file_baru);
+                    //     $allFiles->push($file_baru);
+                    // }
+                    // Materi::where('id', $materi->id)->update(['file_materi'=> $allFiles]);
+                // End Upload File
 
                 //nama file original
                 $name = $file->getClientOriginalName();
@@ -140,8 +142,9 @@ class MateriController extends Controller
     {
         //User yang sedang Login
         $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
-        $materi = Materi::findOrFail($id);
-        return view('materi.show', compact('materi', 'userLogin'));
+        $materi = Materi::with('files')->findOrFail($id);
+        $file2 = FileUpload::all();
+        return view('materi.show', compact('materi', 'userLogin', 'file2'));
     }
 
     public function download($fileId){
@@ -280,5 +283,15 @@ class MateriController extends Controller
         $materi = Materi::with('files')->where('kelas_id', $siswa->kelas_id)->orWhere('mapel_id', $mapels->id)->paginate(10);
         $kelas = Kelas::all();
         return view('mapel_siswa.index_materi', compact('materi', 'siswa', 'userLogin', 'mapels', 'kelas'));
+    }
+
+    public function show_materi_siswa($id)
+    {
+        //
+        //User yang sedang Login
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
+        $filess = FileUpload::all();
+        $materi = Materi::findOrFail($id);
+        return view('mapel_siswa.show', compact('materi', 'userLogin', 'filess'));
     }
 }

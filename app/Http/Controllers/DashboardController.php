@@ -23,4 +23,13 @@ class DashboardController extends Controller
         $pengumumans = Pengumuman::paginate(5);
         return view('dashboards.index', compact('guru', 'siswa', 'kelas', 'pengumumans', 'materi', 'userLogin'));
     }
+
+    public function show($id)
+    {
+        //
+        //User yang sedang Login
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
+        $pengumumans = Pengumuman::findOrFail($id);
+        return view('dashboards.show_pengumuman', compact('pengumumans', 'userLogin'));
+    }
 }

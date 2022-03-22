@@ -1,22 +1,12 @@
 @extends('layouts.template')
 @section('sub-judul', 'Foto Profil Guru | E-Learning SKPK')
 @section('panel-heading')
-      <div class="panel-heading">
-            <h3 class="panel-title">@yield('sub-judul') - 
-                  @if (Auth::user()->level == 'guru')
-                        <span class="label label-primary">Guru</span>
-                  @endif
-                  @if (Auth::user()->level == 'siswa')
-                        <span class="label label-danger">Siswa</span>
-                  @endif
-                  @if (Auth::user()->level == 'admin')
-                        <span class="label label-success">Admin</span>
-                  @endif
-                  @if (Auth::user()->level == 'kepsek')
-                        <span class="label label-warning">Kepala Sekolah</span>
-                  @endif
-            </h3>
-      </div>
+    <div class="panel-heading">
+        <h3 class="panel-title">@yield('sub-judul')</h3>
+        <a href="/dashboards" class="back-hover">
+            <i class="fa fa-angle-left fa-lg"></i> Kembali Ke Dashboard
+        </a>
+    </div>
 @stop
 @section('content')
       <style>
@@ -53,15 +43,15 @@
                                                 <div class="row">
                                                       <div class="col-md-12">
                                                             <div class="col-sm-2">
-                                                                  <img src="{{$guru->getProfile()}}" 
-                                                                  style="margin-left: 20px; width:90px; height: 90px;" 
+                                                                  <img src="{{$guru->getProfile()}}"
+                                                                  style="margin-left: 20px; width:90px; height: 90px;"
                                                                   class="img-circle" alt="Profile">
                                                             </div>
                                                             <div class="col-sm-10">
                                                                   <div class="bio">
                                                                         <h1 style="margin-top: -8px; font-size:44px;">
                                                                         @if ($guru->jk == 'Laki-Laki')
-                                                                            Mr. 
+                                                                            Mr.
                                                                         @else
                                                                             Miss
                                                                         @endif
@@ -85,7 +75,7 @@
                                                                                     <li>Kode Guru <span>{{ $guru->kode_guru }}</span></li>
                                                                                     <li>Nama Guru <span>{{ $guru->nama_guru }}</span></li>
                                                                                     <li>Email <span>{!! $guru->user['email'] !!}</span></li>
-                                                                                    <li>Jenis Kelamin 
+                                                                                    <li>Jenis Kelamin
                                                                                           @if ($guru->jk == 'Laki-Laki')
                                                                                                 <span class="label label-primary">{{ $guru->jk }}</span>
                                                                                           @else
@@ -99,7 +89,7 @@
                                                                         </div>
                                                                   </div>
                                                             </div>
-                                                            
+
                                                       </div>
                                                       <div class="col-md-6">
                                                             <div class="card">
@@ -112,7 +102,7 @@
                                                                                           <li>{{$mapel->nama_mapel}} - {{ $mapel->kelas['nama_kelas'] }}</li>
                                                                                     </ul>
                                                                               @endforeach
-                                                                              
+
                                                                         </div>
                                                                   </div>
                                                             </div>

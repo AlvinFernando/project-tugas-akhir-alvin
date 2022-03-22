@@ -73,7 +73,10 @@
                         </p>
                     </div>
                     <div class="panel-body bg-snowwhite" style="background-color: whitesmoke">
-                        {!! $umum->isi_pengumuman !!}
+                        <h3>{!! $umum->isi_pengumuman !!}</h3>
+                        <a href="{{ route('dashboards.show', $umum->id) }}" class="btn btn-info btn-sm" style="width: 200px;">
+                            <i class="fas fa-eye fa-lg" aria-hidden="true" style="margin-left: -12px;"></i> &nbsp;Lihat Pengumuman
+                        </a>
                     </div>
                 </div>
             @empty

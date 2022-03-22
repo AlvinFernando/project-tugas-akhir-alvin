@@ -22,39 +22,41 @@
         <div class="col-md-12">
             <div class="panel">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Agenda Siswa</h3>
+                    <h3 class="panel-title">Tugas Siswa</h3>
                 </div>
                 <div class="panel-body" style="margin-top: -15px;">
                     <ul class="list-unstyled todo-list">
-                        @foreach ($agenda as $result => $r)
-                            <li>
-                                <img src="{{ $r->users->guru->getProfile() }}" alt="Avatar"
-                                class="img-circle pull-left avatar"
-                                style="margin-top: 40px;
-                                        margin-left: 10px;
-                                        width:70px; height: 70px;">
-                                <h3 style="padding: -10px; margin-left:113px;">{{ $r->users->name }}</h3>
-                                <div style="margin-top: -20px;">
-                                    <p class="title" style="margin-left: -1px;">{{ $r->judul }}</p>
-                                    <div style="margin-top: -40px;">
-                                        {!! $r->isi_agenda !!}
-                                        <br>
-                                        <p class="date" style="margin-top: -40px; margin-left: 79px;">
-                                            {{ $r->updated_at->diffForHumans() }}
-                                        </p>
+                        @foreach ($tugas_siswas as $result => $r)
+                            @if ($r->mapel == $mapels)
+                                <li>
+                                    <img src="{{ $r->users->guru->getProfile() }}" alt="Avatar"
+                                    class="img-circle pull-left avatar"
+                                    style="margin-top: 40px;
+                                            margin-left: 10px;
+                                            width:70px; height: 70px;">
+                                    <h3 style="padding: -10px; margin-left:113px;">{{ $r->users->name }}</h3>
+                                    <div style="margin-top: -20px;">
+                                        <p class="title" style="margin-left: -1px;">{{ $r->judul }}</p>
+                                        <div style="margin-top: -40px;">
+                                            {!! $r->isi_tugas !!}
+                                            <br>
+                                            <p class="date" style="margin-top: -40px; margin-left: 79px;">
+                                                {{ $r->updated_at->diffForHumans() }}
+                                            </p>
+                                        </div>
+                                        <div class="controls">
+                                            <a href="{{ route('agenda_siswa_show', $r->id) }}" class="btn btn-info btn-sm" style="width: 20px;">
+                                                <i class="fas fa-eye fa-lg" aria-hidden="true" style="margin-left: -9px;"></i>
+                                            </a>
+                                        </div>
                                     </div>
-                                    <div class="controls">
-                                        <a href="{{ route('agenda_siswa_show', $r->id) }}" class="btn btn-info btn-sm" style="width: 20px;">
-                                            <i class="fas fa-eye fa-lg" aria-hidden="true" style="margin-left: -9px;"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </li>
+                                </li>
+                            @endif
                         @endforeach
                     </ul>
                 </div>
             </div>
-            {{ $agenda->links() }}
+            {{ $tugas_siswas->links() }}
         </div>
     </div>
 

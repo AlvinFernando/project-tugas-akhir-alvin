@@ -7,6 +7,8 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Mapel;
 use App\Guru;
+use App\Siswa;
+use App\FileLampiran;
 use App\Kelas;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,7 +24,7 @@ class TugasSiswaController extends Controller
         //
         //User yang sedang Login
         $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
-        $tugas_siswa = TugasSiswa::paginate(10);
+        $tugas_siswa = TugasSiswa::paginate(10)->sortByDesc('created_at');
 
         return view('tugas_siswa.index', compact('tugas_siswa', 'userLogin'));
     }
@@ -67,15 +69,56 @@ class TugasSiswaController extends Controller
             'kelas_id' => 'required'
         ], $errors);
 
-        TugasSiswa::Create([
+        $tugas_siswa = TugasSiswa::Create([
             'judul' => $request->judul,
             'mapel_id' =>  $request->mapel_id,
             'isi_tugas' =>  $request->isi_tugas,
             'kelas_id' =>  $request->kelas_id,
-            'users_id' => Auth::id()
+            'users_id' => Auth::id(),
+            'end_date' =>  $request->end_date,
         ]);
 
-        return redirect('tugas_siswa')->with('success','tugas berhasil Diupload !!');
+        if ($request->hasFile('lampiran')) {
+            foreach ($request->lampiran as $file) {
+                // upload File
+                    // $allFiles = collect();
+
+                    // foreach ($request->file('file_materi') as $file ) {
+                    //     $file_exs = $file->getClientOriginalExtension();
+
+                    //     $file_baru = rand(123456, 999999). "." .$file_exs;
+
+                    //     $destination_path = public_path('/file_materi_baru');
+
+                    //     // $new_materi = time().$file->getClientOriginalName();
+                    //     $file->move($destination_path, $file_baru);
+                    //     $allFiles->push($file_baru);
+                    // }
+                    // Materi::where('id', $materi->id)->update(['file_materi'=> $allFiles]);
+                // End Upload File
+
+                //nama file original
+                $name = $file->getClientOriginalName();
+
+                //buat folder file_mater0_baru
+                $targetDir = 'file_lampiran_baru/';
+                $url = $targetDir . $name;
+
+                $file->storeAs($targetDir, $name, 'public');
+
+                FileLampiran::create([
+                    'url'=>$url,
+                    'file'=>$name,
+                    'tugas_siswa_id' => $tugas_siswa->id,
+                ]);
+           }
+        }
+
+        if ($tugas_siswa) {
+            return redirect('tugas_siswa')->with('success','Tugas Siswa berhasil Diupload !!');
+        }else{
+            return redirect('tugas_siswa')->with('error', 'Tugas Siswa Sudah Ada!');
+        }
     }
 
     /**
@@ -84,9 +127,14 @@ class TugasSiswaController extends Controller
      * @param  \App\TugasSiswa  $tugasSiswa
      * @return \Illuminate\Http\Response
      */
-    public function show(TugasSiswa $tugasSiswa)
+    public function show($id)
     {
         //
+         //User yang sedang Login
+         $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
+         $tugas_siswa = TugasSiswa::findOrFail($id);
+         $file2 = FileLampiran::all();
+         return view('tugas_siswa.show', compact('tugas_siswa', 'userLogin', 'file2'));
     }
 
     /**
@@ -95,9 +143,27 @@ class TugasSiswaController extends Controller
      * @param  \App\TugasSiswa  $tugasSiswa
      * @return \Illuminate\Http\Response
      */
-    public function edit(TugasSiswa $tugasSiswa)
+    public function edit($id)
     {
         //
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
+        $guru = Guru::where('user_id', auth()->user()->id)->first();
+        $mapels = Mapel::with('guru')->where('guru_id', $guru->id)->get();
+        $kelas = Kelas::all();
+        $tugas_siswa = TugasSiswa::where('users_id', Auth::user()->id)->findOrFail($id);
+        // //Guru yang Login
+        // $guru = Guru::where('user_id', auth()->user()->id)->first();
+
+        // //Mata Pelajaran Yang Diajarkan Guru
+        // $mapels = Mapel::with('guru')->where('guru_id', $guru->id)->get();
+
+        // $materi = Materi::findorFail($id)->with('mapel')->where('mapel_id', $mapels->id)->get();
+
+        // //Mata Pelajaran Sesuai kelasjj
+        // $kelas = Kelas::all();
+
+
+        return view('tugas_siswa.edit', compact('kelas', 'guru', 'mapels', 'userLogin', 'tugas_siswa'));
     }
 
     /**
@@ -107,9 +173,39 @@ class TugasSiswaController extends Controller
      * @param  \App\TugasSiswa  $tugasSiswa
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TugasSiswa $tugasSiswa)
+    public function update(Request $request, $id)
     {
         //
+        //
+        //dd($request->all());
+        $errors = [
+            'required' => ':attribute wajib diisi !',
+            'min' => ':attribute harus diisi dengan minimal :min karakter !',
+            'max' => ':attribute harus diisi dengan maksimal :max karakter !',
+            'numeric' => ':attribute harus diisi angka saja !',
+        ];
+
+        $this->validate($request, [
+            'judul' => 'required|max:100',
+            'mapel_id' => 'required',
+            'isi_tugas' => 'required',
+            'kelas_id' => 'required'
+        ], $errors);
+
+        $tugas_siswa = TugasSiswa::findOrFail($id);
+
+        $tugas_siswa_data = [
+            'judul' => $request->judul,
+            'mapel_id' =>  $request->mapel_id,
+            'isi_tugas' =>  $request->isi_tugas,
+            'kelas_id' =>  $request->kelas_id,
+            'users_id' => Auth::id(),
+            'end_date' =>  $request->end_date,
+        ];
+
+        TugasSiswa::whereId($id)->update($tugas_siswa_data);
+
+        return redirect('tugas_siswa')->with('success','Tugas Siswa berhasil Diupdate !!');
     }
 
     /**
@@ -118,8 +214,33 @@ class TugasSiswaController extends Controller
      * @param  \App\TugasSiswa  $tugasSiswa
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TugasSiswa $tugasSiswa)
+    public function destroy($id)
     {
         //
+        $tugas_siswa = TugasSiswa::findOrFail($id);
+        $tugas_siswa->delete();
+        return redirect()->back()->with('success','Tugas Siswa Berhasil Dihapus');
+    }
+
+    //=======================================================================================================
+
+    public function halaman_tugas_siswa($id)
+    {
+        // dd($request->all();
+        //User yang sedang Login
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
+        $mapels = Mapel::findOrFail($id);
+        $siswa = Siswa::where('user_id', auth()->user()->id)->first();
+        $tugas_siswa = TugasSiswa::where('kelas_id', $siswa->kelas_id)->orWhere('mapel_id', $mapels->id)->paginate(10);
+        $kelas = Kelas::all();
+        return view('mapel_siswa.index_tugas', compact('tugas_siswa', 'siswa', 'userLogin', 'mapels', 'kelas'));
+    }
+
+    public function show_tugas_siswa($id)
+    {
+        //User yang sedang Login
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
+        $tugas_siswa = TugasSiswa::findOrFail($id);
+        return view('mapel_siswa.show_tugas', compact('materi', 'userLogin', 'filess'));
     }
 }

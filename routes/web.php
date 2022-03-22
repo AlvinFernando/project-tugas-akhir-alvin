@@ -24,6 +24,7 @@ Route::get('/logout', 'AuthController@logout')->name('logout');
 
 Route::group(['middleware' => ['auth', 'ceklevel:admin,kepsek,guru,siswa']], function(){
     Route::get('/dashboards', 'DashboardController@index')->name('dashboards.index');
+    Route::get('/dashboards/pengumuman/show/{id}', 'DashboardController@show')->name('dashboards.show');
 });
 
 //Admin, Kepsek
@@ -76,11 +77,11 @@ Route::group(['middleware' => ['auth', 'ceklevel:guru']], function(){
 //Siswa
 Route::group(['middleware' => ['auth', 'ceklevel:siswa']], function(){
     Route::get('/mymapel', 'MapelController@halaman_mapel_siswa')->name('halaman_mapel_siswa');
-    Route::get('/mymapel/{id}/materi', 'MapelController@show_materi_siswa')->name('show_materi_siswa');
 
     //materi siswa sesuai mapel
     Route::get('/mapelsaya', 'MapelController@list_mapel_siswa')->name('list_mapel_siswa');
     Route::get('/mapelsaya/materi/{id}', 'MateriController@halaman_materi_siswa')->name('halaman_materi_siswa');
+    Route::get('/mapelsaya/materi/{id}/show', 'MateriController@show_materi_siswa')->name('show_materi_siswa');
 
     //Agenda siswa
     Route::get('/agenda_siswa', 'AgendaController@index_siswa')->name('agenda_siswa');

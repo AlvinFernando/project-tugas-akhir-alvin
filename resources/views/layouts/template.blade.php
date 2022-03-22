@@ -14,6 +14,8 @@
         <link rel="stylesheet" href="{{ asset('assets/vendor/toastr/toastr.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/vendor/toastr/toastr.min.css') }}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
+
         <!-- MAIN CSS -->
         <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
 
@@ -148,5 +150,12 @@
                 toastr.error("{!! Session::get('error') !!}")
             </script>
         @endif
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
+        <script type="text/javascript">
+            $('.dates').datepicker({
+                format: 'yyyy/mm/dd',
+                autoclose: true
+            });
+        </script>
     </body>
 </html>

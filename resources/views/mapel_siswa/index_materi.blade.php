@@ -11,64 +11,61 @@
 @section('content')
     <div class="row">
         <div class="col-bg-12">
-            <div class="container-fluid">
-                <table class="table table-striped table-hover table-sm table-bordered">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <h3>Materi</h3>
-                            {{-- <div class="right">
-                            <a href="#" class="btn btn-sm btn-info">
-                            <i class="fas fa-plus text-light"></i>
-                            &nbsp;Tambah Materi Baru
-                            </a>
-                            </div> --}}
+            <div class="col-md-12" style="margin-top: auto; margin-bottom: 10px;">
+                <a href="{{ route('halaman_materi_siswa', $mapels->id) }}" class="bg-success text-white" style="padding: 10px; color: white;">
+                    <i class="fas fa-eye fa-md" aria-hidden="true" style="margin-left: 2px;"></i> &nbsp;MATERI SISWA
+                </a>
+                <a href="#" class="bg-primary text-white" style="padding: 10px; color: white; margin-left: 10px;">
+                    <i class="fas fa-eye fa-md" aria-hidden="true" style="margin-left: 2px;"></i> &nbsp;TUGAS SISWA
+                </a>
+            </div>
+            <br>
+            <div class="container-fluid" style="margin-top: 30px;">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Materi</h3>
+                    </div>
+                    <div class="panel-body" style="margin-top: -15px;">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <ul class="list-unstyled todo-list">
+                                    @foreach ($materi as $result => $r)
+                                        @if ($r->mapel == $mapels)
+                                            <li>
+                                                <div class="col-sm-2">
+                                                    <img src="{{ $r->users->guru->getProfile() }}" alt="Avatar"
+                                                    class="img-circle pull-left avatar"
+                                                    style="margin-top: 40px;
+                                                            margin-left: 10px;
+                                                            width:70px; height: 70px;">
+                                                </div>
+                                                <div class="col-sm-10">
+                                                    <h3 style="padding: -10px;">{{ $r->users->name }}</h3>
+                                                    <h3 style="margin-top: 5px; ">{{ $r->mapel['nama_mapel'] }} - Kelas {{ $r->kelas['nama_kelas'] }}</h3>
+                                                    <div style="margin-top: -20px;">
+                                                        <p class="title" style="margin-left: -34px;">{{ $r->judul_materi }}</p>
+                                                        <div style="margin-top: -70px; margin-left: -34px;">
+                                                            <p>{!! $r->isi_materi !!}</p>
+                                                            <br>
+                                                            <p class="date" style="margin-top: -70px;">
+                                                                {{ $r->updated_at->diffForHumans() }}
+                                                            </p>
+                                                        </div>
+                                                        <div class="controls">
+                                                            <a href="{{ route('show_materi_siswa', $r->id) }}" class="btn btn-info btn-sm" style="width: 20px;">
+                                                                <i class="fas fa-eye fa-lg" aria-hidden="true" style="margin-left: -9px;"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        @endif
+                                    @endforeach
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                    <thead>
-                        <tr>
-                            <th scope="col">No</th>
-                            <th scope="col">Mata Pelajaran</th>
-                            <th scope="col">Judul Materi</th>
-                            <th scope="col">Isi Materi</th>
-                            <th scope="col">File Materi</th>
-                            <th scope="col">Kelas</th>
-                            <th scope="col">Tanggal</th>
-                            <th scope="col">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            @forelse ($materi as $result => $r)
-                                @if ($r->mapel == $mapels)
-                                    <tr>
-                                        <td>{{ $result + $materi->firstitem() }}</td>
-                                        <td>{{ $r->mapel['nama_mapel'] }}</td>
-                                        <td>{{ $r->judul_materi }}</td>
-                                        <td>{!! $r->isi_materi !!}</td>
-                                        <td>
-                                            @foreach ($r->files as $file)
-                                                <p>
-                                                    <a href="{{ 'storage/'.$file->url }}">{{ $file->file }}</a>
-                                                </p>
-                                            @endforeach
-                                        </td>
-                                        <td>{{ $r->kelas['nama_kelas'] }}</td>
-                                        <td>{{ $r->created_at }}</td>
-                                        <td>
-                                            <a href="{{ route('show_materi_siswa', $r->id) }}" class="btn btn-info btn-sm" style="width: 20px;">
-                                                <i class="fas fa-eye fa-lg" aria-hidden="true" style="margin-left: -9px;"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                @endif
-                            @empty
-                                <tr>
-                                    <td colspan="8" align="center" bgcolor="#EEEEEE">Belum Ada Materi yang Diupload</td>
-                                </tr>
-                            @endforelse
-                        </tr>
-                    </tbody>
-                </table>
+                </div>
                 {{ $materi->links() }}
             </div>
         </div>

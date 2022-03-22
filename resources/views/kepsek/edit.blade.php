@@ -1,22 +1,12 @@
 @extends('layouts.template')
 @section('sub-judul', 'Ubah Data Guru | E-Learning SKPK')
 @section('panel-heading')
-      <div class="panel-heading">
-            <h3 class="panel-title">@yield('sub-judul') - 
-                  @if (Auth::user()->level == 'guru')
-                        <span class="label label-primary">Guru</span>
-                  @endif
-                  @if (Auth::user()->level == 'siswa')
-                        <span class="label label-danger">Siswa</span>
-                  @endif
-                  @if (Auth::user()->level == 'admin')
-                        <span class="label label-success">Admin</span>
-                  @endif
-                  @if (Auth::user()->level == 'kepsek')
-                        <span class="label label-warning">Kepala Sekolah</span>
-                  @endif
-            </h3>
-      </div>
+    <div class="panel-heading">
+        <h3 class="panel-title">@yield('sub-judul')</h3>
+        <a href="/dashboards" class="back-hover">
+            <i class="fa fa-angle-left fa-lg"></i> Kembali Ke Dashboard
+        </a>
+    </div>
 @stop
 @section('content')
       <div class="row">
@@ -39,12 +29,12 @@
                                                       <input type="password" class="form-control" name="password" value="{!! $guru->user['password'] !!}" readonly>
                                                       @if ($errors->has('password'))
                                                             <span class="help-block"></span>
-                                                      @endif      
-                                                      <h5 style="margin-left: 20px; font-style: italic; color:darkgray;">* Silahkan Ubah passwordnya !</h5> 
+                                                      @endif
+                                                      <h5 style="margin-left: 20px; font-style: italic; color:darkgray;">* Silahkan Ubah passwordnya !</h5>
                                                 </div>
                                           </div>
                                     </div>
-                                    
+
                                     <div class="row">
                                           <div class="col-md-3">
                                                 <div class="form-group">
@@ -55,12 +45,12 @@
                                           <div class="col-md-9">
                                                 <div class="form-group {{$errors->has('nama_guru') ? ' has-error' : ''}}">
                                                       <label for="nama_guru">Nama Guru</label>
-                                                      <input name ="nama_guru" type="text" class="form-control" 
+                                                      <input name ="nama_guru" type="text" class="form-control"
                                                       value="{{ $guru->nama_guru }}">
                                                       @if ($errors->has('nama_guru'))
                                                             <span class="help-block">{{$errors->first('nama_guru')}}</span>
-                                                      @endif      
-                                                      <h5 style="margin-left: 20px; font-style: italic;">* Ubah Nama Guru !</h5> 
+                                                      @endif
+                                                      <h5 style="margin-left: 20px; font-style: italic;">* Ubah Nama Guru !</h5>
                                                 </div>
                                           </div>
                                     </div>
@@ -79,7 +69,7 @@
                                                       @if ($errors->has('jk'))
                                                             <span class="help-block">{{$errors->first('jk')}}</span>
                                                       @endif
-                                                      <h5 style="margin-left: 20px; font-style: italic; color:darkgray;">* Pilih Jenis Kelamin !</h5> 
+                                                      <h5 style="margin-left: 20px; font-style: italic; color:darkgray;">* Pilih Jenis Kelamin !</h5>
                                                 </div>
                                           </div>
 
@@ -99,7 +89,7 @@
                                                       @if ($errors->has('agama'))
                                                             <span class="help-block">{{$errors->first('agama')}}</span>
                                                       @endif
-                                                      <h5 style="margin-left: 20px; font-style: italic; color:darkgray;">* Agama wajib dipilih !</h5> 
+                                                      <h5 style="margin-left: 20px; font-style: italic; color:darkgray;">* Agama wajib dipilih !</h5>
                                                 </div>
                                                 <!-- End Combo Box -->
                                           </div>
@@ -111,8 +101,8 @@
                                                       <input name ="no_telp" type="text" class="form-control" value="{{ $guru->no_telp }}">
                                                       @if ($errors->has('no_telp'))
                                                             <span class="help-block">{{$errors->first('no_telp')}}</span>
-                                                      @endif 
-                                                      <h5 style="margin-left: 20px; font-style: italic; color:darkgray;">* Isi No Telepon dengan Benar !</h5> 
+                                                      @endif
+                                                      <h5 style="margin-left: 20px; font-style: italic; color:darkgray;">* Isi No Telepon dengan Benar !</h5>
                                                 </div>
                                           </div>
                                     </div>
@@ -124,8 +114,8 @@
                                                 <textarea name ="alamat" class="form-control" id="exampleFormControlTextarea1" rows="3">{{ $guru->alamat }}</textarea>
                                                 @if ($errors->has('alamat'))
                                                       <span class="help-block">{{$errors->first('alamat')}}</span>
-                                                @endif 
-                                                <h5 style="margin-left: 20px; font-style: italic; color:darkgray;">* Alamat Wajib Diisi, min. 8 karakter dan maks. 100 karakter !</h5> 
+                                                @endif
+                                                <h5 style="margin-left: 20px; font-style: italic; color:darkgray;">* Alamat Wajib Diisi, min. 8 karakter dan maks. 100 karakter !</h5>
                                                 </div>
                                           </div>
                                     </div>

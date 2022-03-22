@@ -151,6 +151,7 @@ class MapelController extends Controller
         return redirect()->back()->with('success','Mata Pelajaran Berhasil Dihapus');
     }
 
+    // =========================================================================================================
     // public function daftar_mapel()
     // {
     //     //Guru yang Login
@@ -177,25 +178,16 @@ class MapelController extends Controller
         return view('mapel_siswa.index_mapel', compact('mapels', 'kelas', 'userLogin', 'siswa'));
     }
 
+    // public function halaman_mapel_siswa()
+    // {
+    //     // dd($request->all());
+    //     //User yang sedang Login
+    //     $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
+    //     $kelas = Kelas::with('siswa')->first();
+    //     $siswa = Siswa::where('user_id', auth()->user()->id)->orWhere('kelas_id', $kelas->id)->get();
+    //     $materi = Materi::with('files')->paginate(10);
+    //     return view('mapel_siswa.index', compact('materi', 'siswa', 'userLogin'));
+    // }
 
-    public function halaman_mapel_siswa()
-    {
-        // dd($request->all());
-        //User yang sedang Login
-        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
-        $kelas = Kelas::with('siswa')->first();
-        $siswa = Siswa::where('user_id', auth()->user()->id)->orWhere('kelas_id', $kelas->id)->get();
-        $materi = Materi::with('files')->paginate(10);
-        return view('mapel_siswa.index', compact('materi', 'siswa', 'userLogin'));
-    }
-
-    public function show_materi_siswa($id)
-    {
-        //
-        //User yang sedang Login
-        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
-        $filess = FileUpload::all();
-        $materi = Materi::findOrFail($id);
-        return view('mapel_siswa.show', compact('materi', 'userLogin', 'filess'));
-    }
+    
 }

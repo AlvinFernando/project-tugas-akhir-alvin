@@ -8,7 +8,7 @@ class TugasSiswa extends Model
 {
     //
     protected $table = 'tugas_siswas';
-    protected $fillable = ['judul', 'isi_tugas', 'kelas_id', 'users_id', 'mapel_id'];
+    protected $fillable = ['judul', 'isi_tugas', 'kelas_id', 'users_id', 'mapel_id', 'end_date', 'lampiran'];
 
     public function kelas(){
     	return $this->belongsTo(Kelas::class);
@@ -20,5 +20,10 @@ class TugasSiswa extends Model
 
     public function users(){
     	return $this->belongsto(User::class);
+    }
+
+    //File
+    public function files(){
+        return $this->hasMany(FileLampiran::class);
     }
 }
