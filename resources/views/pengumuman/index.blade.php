@@ -37,7 +37,6 @@
                                     <th scope="col">No</th>
                                     <th scope="col">Judul</th>
                                     <th scope="col">Isi</th>
-                                    <th scope="col">Kepala Sekolah</th>
                                     <th scope="col">Aksi</th>
                               </tr>
                         </thead>
@@ -48,7 +47,7 @@
                                                 <td>{{ $result + $pengumumans->firstitem() }}</td>
                                                 <td>{{ $r->judul }}</td>
                                                 <td>{!! $r->isi_pengumuman !!}</td>
-                                                <td>{{ $r->users->name }}</td>
+                                                {{-- <td>{{ $r->users->name }}</td> --}}
                                                 <td>
                                                       <form action="{{ route('pengumuman.destroy', $r->id )}}" method="POST">
                                                             @csrf
@@ -67,7 +66,7 @@
                                           </tr>
                                     @empty
                                           <tr>
-                                                <td colspan="6" align="center" bgcolor="#EEEEEE">Belum Ada Pengumuman Yang Diisi</td>
+                                                <td colspan="5" align="center" bgcolor="#EEEEEE">Belum Ada Pengumuman Yang Diisi</td>
                                           </tr>
                                     @endforelse
                               </tr>

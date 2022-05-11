@@ -17,7 +17,7 @@ class PengumumanController extends Controller
     {
         //User yang sedang Login
         $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
-        $pengumumans = Pengumuman::paginate(10);
+        $pengumumans = Pengumuman::paginate(5);
         return view('pengumuman.index', compact('pengumumans', 'userLogin'));
     }
 

@@ -19,7 +19,7 @@ class KelasController extends Controller
     {
         //User yang sedang Login
         $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
-        $kelas = Kelas::paginate(10);
+        $kelas = Kelas::paginate(5);
         return view('kelas.index', compact('kelas', 'userLogin'));
     }
 

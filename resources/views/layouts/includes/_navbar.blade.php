@@ -35,6 +35,16 @@
                                 class="img-circle" alt="foto profil" style="width: 30px; height: 30px;">
                             @endif
 
+                        {{-- foto Kepsek --}}
+                        @elseif (Auth::user()->level == 'kepsek')
+                            @if (Auth::user()->kepsek->getProfile())
+                                <img src="{{ asset('images/miss_rachel.jpg') }}"
+                                class="img-circle" alt="foto profil" style="width: 30px; height: 30px;">
+                            @else
+                                <img src="{{ asset('images/default.jpg') }}"
+                                class="img-circle" alt="foto profil" style="width: 30px; height: 30px;">
+                            @endif
+
                         {{-- Foto Siswa --}}
                         @elseif (Auth::user()->level == 'siswa')
                             @if (Auth::user()->siswa->getProfile())
@@ -75,8 +85,8 @@
                         {{-- Jika User sebagai Siswa --}}
                         @if (Auth::user()->level == 'siswa')
                             <li>
-                                <a href="#">
-                                    <i class="lnr lnr-user"></i> <span>Profil Saya</span>
+                                <a href="{{ route('biodata_siswa', Auth::user()->id) }}">
+                                    <i class="lnr lnr-user"></i> <span>My Profile</span>
                                 </a>
                             </li>
                         @endif

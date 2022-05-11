@@ -33,34 +33,44 @@
                 <div class="panel-body" style="margin-top: -15px;">
                     <ul class="list-unstyled todo-list">
                         @foreach ($tugas_siswa as $result => $r)
-                            {{-- Menampilkan agenda yang ditulis hanya user yang login saja --}}
                             @if ($r->users_id == Auth::user()->id)
                                 <li>
                                     <div class="row">
-                                        <div class="col-lg-12">
-                                            <p class="title text-success" style="margin-left: 15px; font-size: 32px;">{{ $r->mapel['nama_mapel'] }}</p>
+                                        <div class="col-bg-12">
+                                            <div class="col-md-2">
+                                                <img src="{{ $r->users->guru->getProfile() }}" alt="Avatar"
+                                                class="img-circle pull-left avatar"
+                                                style="margin-top: 40px;
+                                                        margin-left: 10px;
+                                                        width:70px; height: 70px;">
+                                            </div>
                                             <div class="col-md-9">
-                                                <p class="title" style="margin-top: -40px; font-size: 22px;"><u>Kelas : {{ $r->kelas['nama_kelas'] }}</u></p>
-                                                <p class="title" style="margin-top: -40px; font-size: 24px;">{{ $r->judul }}</p>
-                                                <div style="margin-top: -40px; font-size: 20px;">
-                                                    {!! $r->isi_tugas !!}
-                                                    <br>
-                                                    <p class="date" style="margin-top: -40px;">{{ $r->updated_at->diffForHumans() }}</p>
+                                                <h3 style="margin-top: 15px; ">{{ $r->mapel['nama_mapel'] }} - Kelas {{ $r->kelas['nama_kelas'] }}</h3>
+                                                <div style="margin-top: -20px;">
+                                                    <p class="title" style="margin-left: -34px;">{{ $r->judul }}</p>
+                                                    <div style="margin-top: -70px; margin-left: -34px;">
+                                                        <p>{!! $r->isi_tugas !!}</p>
+                                                        <br>
+                                                        <p class="date" style="margin-top: -70px;">
+                                                            {{ $r->updated_at->diffForHumans() }}
+                                                        </p>
+                                                    </div>
+
                                                 </div>
                                             </div>
-                                            <div class="col-md-3">
-                                                <div class="controls text-center" style="margin-top: 50px; margin-left: 10px;">
+                                            <div class="col-md-1">
+                                                <div class="controls" style="margin-top: 50px;">
                                                     <form action="{{ route('tugas_siswa.destroy', $r->id )}}" method="POST">
                                                         @csrf
                                                         @method('delete')
                                                         <a href="{{ route('tugas_siswa.show', $r->id) }}" class="btn btn-info btn-sm" style="width: 20px;">
-                                                            <i class="fas fa-eye fa-lg" aria-hidden="true" style="margin-left: -9px;"></i>
+                                                            <i class="fas fa-eye fa-lg" aria-hidden="true" style="margin-left: -8px;"></i>
                                                         </a>
                                                         <a href="{{ route('tugas_siswa.edit', $r->id ) }}" class="btn btn-warning btn-sm" style="width: 20px;">
-                                                            <i class="fas fa-edit fa-lg" aria-hidden="true" style="margin-left: -9px;"></i>
+                                                            <i class="fas fa-edit fa-lg" aria-hidden="true" style="margin-left: -8px;"></i>
                                                         </a>
-                                                        <button type="submit" class="btn btn-danger btn-sm" style="width: 20px;">
-                                                            <i class="fas fa-trash-alt fa-lg" aria-hidden="true" style="margin-left: -9px;"></i>
+                                                        <button type="submit" class="btn btn-danger btn-sm" style="width: 20px; margin-left: 5px;">
+                                                            <i class="fas fa-trash-alt fa-lg" aria-hidden="true" style="margin-left: -8px;"></i>
                                                         </button>
                                                     </form>
                                                 </div>

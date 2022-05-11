@@ -91,6 +91,29 @@
             .back-hover:hover{
                 color: rgb(62, 216, 42);
             }
+
+            .bio{
+                  margin-top: 10px;
+            }
+
+            .float-center{
+                  margin-left: 45%;
+            }
+
+            .img-circle {
+                  border:2px solid #fff;
+                  background: url(img/duck.png) no-repeat;
+                  -moz-box-shadow: 0px 6px 5px #ccc;
+                  -webkit-box-shadow: 0px 6px 5px #ccc;
+                  box-shadow: 0px 6px 5px #ccc;
+                  -moz-border-radius:190px;
+                  -webkit-border-radius:190px;
+                  border-radius:190px;
+            }
+
+            .icon-profil{
+                  margin-left: -50px;
+            }
         </style>
     </head>
 

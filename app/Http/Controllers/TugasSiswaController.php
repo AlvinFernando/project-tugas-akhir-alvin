@@ -9,6 +9,8 @@ use App\Mapel;
 use App\Guru;
 use App\Siswa;
 use App\FileLampiran;
+use App\FileTugasSiswa;
+use App\KumpulTugasSiswa;
 use App\Kelas;
 use Illuminate\Support\Facades\Auth;
 
@@ -130,11 +132,22 @@ class TugasSiswaController extends Controller
     public function show($id)
     {
         //
-         //User yang sedang Login
-         $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
-         $tugas_siswa = TugasSiswa::findOrFail($id);
-         $file2 = FileLampiran::all();
-         return view('tugas_siswa.show', compact('tugas_siswa', 'userLogin', 'file2'));
+        //User yang sedang Login
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
+        $tugas_siswa = TugasSiswa::findOrFail($id);
+        $file2 = FileLampiran::all();
+        $kumpul_tugas_siswas = KumpulTugasSiswa::all();
+        return view('tugas_siswa.show', compact('tugas_siswa', 'userLogin', 'file2', 'kumpul_tugas_siswas'));
+    }
+
+    public function show_kumpul_tugas_siswa($id)
+    {
+        //
+        //User yang sedang Login
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
+        $kumpul_tugas_siswas = KumpulTugasSiswa::findOrFail($id);
+        $file3 = FileTugasSiswa::all();
+        return view('tugas_siswa.show_tugas_siswa', compact('kumpul_tugas_siswas', 'userLogin', 'file3'));
     }
 
     /**
@@ -241,6 +254,48 @@ class TugasSiswaController extends Controller
         //User yang sedang Login
         $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
         $tugas_siswa = TugasSiswa::findOrFail($id);
-        return view('mapel_siswa.show_tugas', compact('materi', 'userLogin', 'filess'));
+        $kumpul_tugas_siswas = KumpulTugasSiswa::all();
+        return view('mapel_siswa.show_tugas', compact('materi', 'userLogin', 'tugas_siswa', 'kumpul_tugas_siswas'));
+    }
+
+    public function kumpul_tugas_siswa(Request $request, $id)
+    {
+        //dd($request->all());
+        $this->validate($request, [
+            'nama_tugas' => 'required',
+            'file_tugas_siswas.*' => 'required|mimes:doc,docx,pdf,xlsx,pdf,jpg,jpeg,png|max:2000'
+        ]);
+
+        $tugas_siswa = TugasSiswa::find($id);
+        $kumpul_tugas_siswas = KumpulTugasSiswa::create([
+            'nama_tugas' => $request->nama_tugas,
+            'isi' => $request->isi,
+            'tugas_siswas_id' => $tugas_siswa->id,
+            'users_id' => Auth::id(),
+            'status' => 'Dikumpulkan'
+        ]);
+
+        //dd($request);
+        if ($request->hasFile('file_tugas_siswas')) {
+            foreach ($request->file_tugas_siswas as $file) {
+
+                //nama file original
+                $name = $file->getClientOriginalName();
+
+                //buat folder file_mater0_baru
+                $targetDir = 'file_tugas_siswa_baru/';
+                $url = $targetDir . $name;
+
+                $file->storeAs($targetDir, $name, 'public');
+
+                FileTugasSiswa::create([
+                    'url'=>$url,
+                    'file'=>$name,
+                    'kumpul_tugas_siswas_id' => $kumpul_tugas_siswas->id
+                ]);
+           }
+        }
+
+        return back()->with('success', 'Tugas Telah Diupload');
     }
 }

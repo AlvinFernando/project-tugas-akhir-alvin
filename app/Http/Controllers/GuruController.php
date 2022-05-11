@@ -20,7 +20,7 @@ class GuruController extends Controller
     public function index()
     {
         $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
-        $guru = Guru::paginate(10);
+        $guru = Guru::paginate(5);
         return view('guru.index', compact('guru', 'userLogin'));
     }
 
@@ -173,7 +173,7 @@ class GuruController extends Controller
     public function biodata_guru(){
         $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
         $guru = Guru::where('user_id', auth()->user()->id)->first();
-        $user = Auth::user();
+        $user = Auth::user()->guru;
         $mapel = Mapel::all();
         return view('guru.biodata', [
             'guru' => $guru,
@@ -183,15 +183,16 @@ class GuruController extends Controller
         ]);
     }
 
-    public function edit_biodata_guru(){
+    public function edit_biodata_gurus(){
         //User yang sedang Login
         $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
         // $guru = Guru::where('user_id', auth()->user()->id)->first();
         $guru = Guru::where('user_id', auth()->user()->id)->first();
-        return view('guru.edit_biodata_guru', compact('guru', 'userLogin'));
+        $user = User::find(Auth::id());
+        return view('guru.edit_biodata_guru', compact('guru', 'userLogin', 'user'));
     }
 
-    public function update_biodata_gurus(Request $request){
+    public function update_biodata_gurus(Request $request, User $user){
         //User yang sedang Login
         // dd();
 
@@ -202,6 +203,10 @@ class GuruController extends Controller
             'agama' => 'required',
             'alamat' => 'required|min:8|max:100',
             'no_telp' => 'required|numeric'
+        ]);
+
+        $user->update([
+            $user->password = bcrypt($request->password)
         ]);
 
         $guru = Guru::where('user_id', auth()->user()->id)->first();

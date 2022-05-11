@@ -26,4 +26,8 @@ class TugasSiswa extends Model
     public function files(){
         return $this->hasMany(FileLampiran::class);
     }
+
+    public function kumpul_tugas_siswa() {
+        return $this->hasMany(KumpulTugasSiswa::class);
+    }
 }

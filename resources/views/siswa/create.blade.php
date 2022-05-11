@@ -23,7 +23,7 @@
                                                       @if ($errors->has('email'))
                                                             <span class="help-block">{{$errors->first('email')}}</span>
                                                       @endif
-                                                      <h6 style="margin-left: 20px; font-style: italic; color:rgb(31, 31, 31);">* Isi Email dengan benar !</h6>
+                                                      
                                                 </div>
                                           </div>
                                           <div class="col-md-6">
@@ -33,7 +33,7 @@
                                                     @if ($errors->has('password'))
                                                         <span class="help-block"></span>
                                                     @endif
-                                                    <h6 style="margin-left: 20px; font-style: italic; color:rgb(31, 31, 31);">* Silahkan buat passwordnya !</h6>
+
                                                 </div>
                                           </div>
                                     </div>
@@ -46,7 +46,6 @@
                                                       @if ($errors->has('no_induk'))
                                                             <span class="help-block">{{ $errors->first('no_induk') }}</span>
                                                       @endif
-                                                      <h5 style="margin-left: 20px; font-style: italic;">* No Induk Wajib Diisi !</h5>
                                                 </div>
                                           </div>
                                           <div class="col-md-6">
@@ -56,7 +55,6 @@
                                                       @if ($errors->has('nama_siswa'))
                                                             <span class="help-block">{{ $errors->first('nama_siswa') }}</span>
                                                       @endif
-                                                      <h5 style="margin-left: 20px; font-style: italic;">* Isi Nama Siswa dengan Benar !</h5>
                                                 </div>
                                           </div>
                                     </div>
@@ -75,7 +73,6 @@
                                                       @if ($errors->has('kelas_id'))
                                                             <span class="help-block"></span>
                                                       @endif
-                                                      <h5 style="margin-left: 20px; font-style: italic;">* Kelas Harus Dipilih !</h5>
                                                 </div>
                                           </div>
 
@@ -92,7 +89,6 @@
                                                       @if ($errors->has('guru_id'))
                                                             <span class="help-block"></span>
                                                       @endif
-                                                      <h5 style="margin-left: 20px; font-style: italic;">* Wali Kelas Harus Dipilih !</h5>
                                                 </div>
                                           </div>
 
@@ -109,7 +105,6 @@
                                                       @if ($errors->has('jk'))
                                                             <span class="help-block"></span>
                                                       @endif
-                                                      <h5 style="margin-left: 20px; font-style: italic;">* Pilih Jenis Kelamin !</h5>
                                                 </div>
                                           </div>
 
@@ -129,7 +124,6 @@
                                                       @if ($errors->has('agama'))
                                                             <span class="help-block">{{ $errors->first('agama') }}</span>
                                                       @endif
-                                                      <h5 style="margin-left: 20px; font-style: italic;">* Agama wajib diisi !</h5>
                                                 </div>
                                                 <!-- End Combo Box -->
                                           </div>
@@ -143,7 +137,7 @@
                                                       @if ($errors->has('nama_ayah'))
                                                             <span class="help-block">{{ $errors->first('nama_ayah') }}</span>
                                                       @endif
-                                                      <h5 style="margin-left: 20px; font-style: italic;">* Isi Nama ayah dengan Benar !</h5>
+
                                                 </div>
                                           </div>
 
@@ -154,7 +148,6 @@
                                                       @if ($errors->has('nama_ibu'))
                                                             <span class="help-block">{{ $errors->first('nama_ibu') }}</span>
                                                       @endif
-                                                      <h5 style="margin-left: 20px; font-style: italic;">* Isi Nama ibu dengan Benar !</h5>
                                                 </div>
                                           </div>
 
@@ -163,7 +156,6 @@
                                                       <label for="exampleInputEmail1">Nama Wali</label>
                                                       <input name ="nama_wali" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nama Wali">
 
-                                                      <h5 style="margin-left: 20px; font-style: italic;">* Nama Wali Tidak Wajib Diisi !</h5>
                                                 </div>
                                           </div>
                                     </div>
@@ -177,7 +169,7 @@
                                                       @if ($errors->has('alamat'))
                                                             <span class="help-block">{{ $errors->first('alamat') }}</span>
                                                       @endif
-                                                      <h5 style="margin-left: 20px; font-style: italic;">* Alamat Wajib Diisi, min. 8 karakter dan maks. 100 karakter !</h5>
+
                                                 </div>
                                           </div>
 
@@ -189,15 +181,15 @@
                                                       @if ($errors->has('no_telp'))
                                                             <span class="help-block">{{ $errors->first('no_telp') }}</span>
                                                       @endif
-                                                      <h5 style="margin-left: 20px; font-style: italic;">* Isi No Telepon dengan Benar !</h5>
+
                                                 </div>
                                           </div>
+                                    </div>
 
-                                          <!--Input Avatar-->
-                                          <div class="form-group">
-                                                <label for="exampleFormControlTextarea1">Foto Profil</label>
-                                                <input type="file" name="foto_profil" class="form-control">
-                                          </div>
+                                    <!--Input Avatar-->
+                                    <div class="form-group">
+                                        <label for="exampleFormControlTextarea1">Foto Profil</label>
+                                        <input type="file" name="foto_profil" class="form-control">
                                     </div>
 
                                     <div class="modal-footer">

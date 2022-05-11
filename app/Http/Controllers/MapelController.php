@@ -23,7 +23,7 @@ class MapelController extends Controller
     {
         //User yang sedang Login
         $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
-        $mapel = Mapel::paginate(10);
+        $mapel = Mapel::paginate(5);
         return view('mapel.index', compact('mapel', 'userLogin'));
     }
 
@@ -189,5 +189,5 @@ class MapelController extends Controller
     //     return view('mapel_siswa.index', compact('materi', 'siswa', 'userLogin'));
     // }
 
-    
+
 }

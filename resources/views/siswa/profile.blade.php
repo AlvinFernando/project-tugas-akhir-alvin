@@ -1,10 +1,10 @@
 @extends('layouts.template')
-@section('sub-judul', 'Foto Profil Guru | E-Learning SKPK')
+@section('sub-judul', 'Foto Profil siswa | E-Learning SKPK')
 @section('panel-heading')
     <div class="panel-heading">
         <h3 class="panel-title">@yield('sub-judul')</h3>
-        <a href="/dashboards" class="back-hover">
-            <i class="fa fa-angle-left fa-lg"></i> Kembali Ke Dashboard
+        <a href="{{ route('siswa.index') }}" class="back-hover">
+            <i class="fa fa-angle-left fa-lg"></i> Kembali Ke Halaman Data Siswa
         </a>
     </div>
 @stop
@@ -43,21 +43,16 @@
                                                 <div class="row">
                                                       <div class="col-md-12">
                                                             <div class="col-sm-2">
-                                                                  <img src="{{$guru->getProfile()}}"
+                                                                  <img src="{{$siswa->getProfile()}}"
                                                                   style="margin-left: 20px; width:90px; height: 90px;"
                                                                   class="img-circle" alt="Profile">
                                                             </div>
                                                             <div class="col-sm-10">
                                                                   <div class="bio">
                                                                         <h1 style="margin-top: -8px; font-size:44px;">
-                                                                        @if ($guru->jk == 'Laki-Laki')
-                                                                            Mr.
-                                                                        @else
-                                                                            Miss
-                                                                        @endif
-                                                                              {{ $guru->nama_guru }}
+                                                                              {{ $siswa->nama_siswa }}
                                                                         </h1>
-                                                                        <p style="margin-top: -12px; font-size:x-large;">{!! $guru->user['email'] !!}</p>
+                                                                        <p style="margin-top: -12px; font-size:x-large;">{!! $siswa->user['email'] !!}</p>
                                                                   </div>
                                                             </div>
                                                       </div>
@@ -70,21 +65,19 @@
                                                             <div class="card">
                                                                   <div class="card-body">
                                                                         <div class="profile-info">
-                                                                              <h4 class="heading">Profil Guru</h4>
+                                                                              <h4 class="heading">Profil siswa</h4>
                                                                               <ul class="list-unstyled list-justify">
-                                                                                    <li>Kode Guru <span>{{ $guru->kode_guru }}</span></li>
-                                                                                    <li>Nama Guru <span>{{ $guru->nama_guru }}</span></li>
-                                                                                    <li>Email <span>{!! $guru->user['email'] !!}</span></li>
-                                                                                    <li>Jenis Kelamin
-                                                                                          @if ($guru->jk == 'Laki-Laki')
-                                                                                                <span class="label label-primary">{{ $guru->jk }}</span>
+                                                                                    <li>Kode siswa: <span>{{ $siswa->no_induk }}</span></li>
+                                                                                    <li>Nama siswa: <span>{{ $siswa->nama_siswa }}</span></li>
+                                                                                    <li>Email: <span>{!! $siswa->user['email'] !!}</span></li>
+                                                                                    <li>Jenis Kelamin:
+                                                                                          @if ($siswa->jk == 'Laki-Laki')
+                                                                                                <span class="label label-primary">{{ $siswa->jk }}</span>
                                                                                           @else
-                                                                                                <span class="label label-danger">{{ $guru->jk }}</span>
+                                                                                                <span class="label label-danger">{{ $siswa->jk }}</span>
                                                                                           @endif
                                                                                     </li>
-                                                                                    <li>Agama <span>{{ $guru->agama }}</span></li>
-                                                                                    <li>Alamat <span>{{ $guru->alamat }}</span></li>
-                                                                                    <li>No. Telp <span>{{ $guru->no_telp }}</span></li>
+
                                                                               </ul>
                                                                         </div>
                                                                   </div>
@@ -94,16 +87,15 @@
                                                       <div class="col-md-6">
                                                             <div class="card">
                                                                   <div class="card-body">
-                                                                        {{-- Mata Pelajaran Yang diajar oleh Guru Pengajar --}}
-                                                                        <div class="profile-info">
-                                                                              <h4 class="heading">Mata Pelajaran Yang Diajar Oleh {{ $guru->nama_guru }}</h4>
-                                                                              @foreach ($guru->mapel as $mapel)
-                                                                                    <ul class="list-unstyled list-justify">
-                                                                                          <li>{{$mapel->nama_mapel}} - {{ $mapel->kelas['nama_kelas'] }}</li>
-                                                                                    </ul>
-                                                                              @endforeach
+                                                                      <div style="margin-top: 100px;">
+                                                                        <ul class="list-unstyled list-justify">
+                                                                              <li>Agama <span>{{ $siswa->agama }}</span></li>
+                                                                            <li>Alamat <span>{{ $siswa->alamat }}</span></li>
+                                                                            <li>No. Telp <span>{{ $siswa->no_telp }}</span></li>
 
-                                                                        </div>
+                                                                        </ul>
+                                                                      </div>
+
                                                                   </div>
                                                             </div>
                                                       </div>
@@ -112,7 +104,8 @@
                                           <div class="icon-profil">
                                                 <a href="{{ url()->previous() }}" class="btn btn-default btn-md float-center" style="color: black">Cancel</a>
                                                 @if (Auth::user()->level == 'admin')
-                                                    <a href="{{ route('guru.edit', $guru->id ) }}" class="btn btn-warning btn-md float-left">Ubah Profil</a>
+
+                                                      <a href="{{ route('siswa.edit', $siswa->id ) }}" class="btn btn-warning btn-md float-left">Ubah Profil</a>
                                                 @endif
                                           </div>
                                     </div>

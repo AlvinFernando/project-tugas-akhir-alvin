@@ -3,10 +3,11 @@
 @section('panel-heading')
     <div class="panel-heading">
         <h3 class="panel-title">@yield('sub-judul')</h3>
-        <a href="/dashboards" class="back-hover">
-            <i class="fa fa-angle-left fa-lg"></i> Kembali Ke Dashboard
+        <a href="{{ route('agenda.index') }}" class="back-hover">
+            <i class="fa fa-angle-left fa-lg"></i> Kembali Ke Halaman Agenda
         </a>
     </div>
+@stop
 @section('content')
 
       @if(count($errors)>0)

@@ -19,8 +19,12 @@
                     @endif
                 </h3>
             </div>
+            @php
+                use Carbon\Carbon;
+                $today = Carbon::now()->isoFormat('dddd, D MMMM Y')
+            @endphp
             <div class="col-md-6">
-                <h5 class="panel-title float-right mb-auto">{{ date('Y-m-d') }}</h5>
+                <h5 class="panel-title float-right mb-auto">{{ $today }}</h5>
             </div>
         </div>
     </div>

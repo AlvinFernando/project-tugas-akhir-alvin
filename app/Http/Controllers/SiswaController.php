@@ -8,6 +8,7 @@ use App\Guru;
 use App\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class SiswaController extends Controller
@@ -21,7 +22,7 @@ class SiswaController extends Controller
     {
         //User yang sedang Login
         $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
-        $siswa = Siswa::paginate(10);
+        $siswa = Siswa::paginate(5);
         return view('siswa.index', compact('siswa', 'userLogin'));
     }
 
@@ -144,18 +145,14 @@ class SiswaController extends Controller
             'no_telp' => 'required|numeric'
         ], $errors);
 
-        $data_siswa =[
-            'no_induk' => $request->no_induk,
-            'nama_siswa' => $request->nama_siswa,
-            'kelas_id' => $request->kelas_id,
-            'jk' => $request->jk,
-            'agama' => $request->agama,
-            'guru_id' => $request->guru_id,
-            'alamat' => $request->alamat,
-            'no_telp' => $request->no_telp
-        ];
+        $siswa = Guru::find($id);
 
-        Siswa::whereId($id)->update($data_siswa);
+        $siswa -> Update($request->all());
+        if($request->hasfile('foto_profil')){
+            $request->file('foto_profil')->move('images/', $request->file('foto_profil')->getClientOriginalName());
+            $siswa->foto_profil = $request->file('foto_profil')->getClientOriginalName();
+            $siswa->save();
+        }
 
         return redirect()->route('siswa.index')->with('success','Data Siswa Berhasil di Update');
     }
@@ -173,4 +170,84 @@ class SiswaController extends Controller
 
         return redirect()->back()->with('success','Data Siswa Berhasil Dihapus');
     }
+
+    public function profile($id){
+
+        //User yang sedang Login
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
+        $user = \App\User::all();
+        $siswa = Siswa::find($id);
+        return view('siswa.profile', [
+            'siswa' => $siswa,
+            'user' => $user,
+            'userLogin' => $userLogin
+        ]);
+    }
+
+    public function biodata_siswas(){
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
+        $siswa = Siswa::where('user_id', auth()->user()->id)->first();
+        $user = Auth::user()->siswa;
+        return view('siswa.biodata', [
+            'siswa' => $siswa,
+            'user' => $user,
+            'userLogin' => $userLogin
+        ]);
+    }
+
+    public function edit_biodata_siswas(){
+        //User yang sedang Login
+        $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
+        // $guru = Guru::where('user_id', auth()->user()->id)->first();
+        $siswa = Siswa::where('user_id', auth()->user()->id)->first();
+        $kelas = Kelas::all();
+        $guru = Guru::all();
+        $user = User::find(Auth::id());
+        return view('siswa.edit_biodata_siswa', compact('siswa', 'userLogin', 'kelas', 'guru', 'user'));
+    }
+
+    public function update_biodata_siswas(Request $request, User $user){
+        //User yang sedang Login
+        // dd();
+
+        $this->validate($request, [
+            'no_induk' => 'required|max:3',
+            'nama_siswa' => 'required|min:3',
+            'kelas_id' => 'required',
+            'jk' => 'required',
+            'agama' => 'required',
+            'alamat' => 'required|min:8|max:100',
+            'no_telp' => 'required|numeric'
+        ]);
+
+        $user->update([
+            $user->password = bcrypt($request->password)
+        ]);
+
+        $siswa = Siswa::where('user_id', auth()->user()->id)->first();
+
+        // $siswa -> update([
+        //     'no_induk' => $request->no_induk,
+        //     'nama_siswa' => $request->nama_siswa,
+        //     'kelas_id' => $request->kelas_id,
+        //     'jk' => $request->jk,
+        //     'agama' => $request->agama,
+        //     'alamat' => $request->alamat,
+        //     'no_telp' => $request->no_telp,
+        //     'nama_ayah' => $request->nama_ayah,
+        //     'nama_ibu' => $request->nama_ibu,
+        //     'nama_wali' => $request->nama_wali,
+        // ]);
+        $siswa -> update($request->all());
+
+        if($request->hasfile('foto_profil')){
+            $request->file('foto_profil')->move('images/', $request->file('foto_profil')->getClientOriginalName());
+            $siswa->foto_profil = $request->file('foto_profil')->getClientOriginalName();
+            $siswa->save();
+        }
+
+        return back()->with('success','Biodata Anda Berhasil di Update');
+    }
+
+
 }

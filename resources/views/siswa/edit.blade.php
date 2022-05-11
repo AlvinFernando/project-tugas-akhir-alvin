@@ -16,31 +16,27 @@
                               <form action="{{ route('siswa.update', $siswa->id) }}" method="POST" enctype="multipart/form-data"> <!-- memanggil controller create-->
                                     @csrf
                                     @method('PATCH')
-                                    @if (Auth::user()->level == 'siswa')
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                    <div class="form-group {{$errors->has('no_induk') ? ' has-error' : ''}}">
-                                                        <label for="no_induk">No Induk</label>
-                                                        <input name ="no_induk" type="text" class="form-control" value="{{ $siswa->no_induk }}">
-                                                        @if ($errors->has('no_induk'))
-                                                                <span class="help-block">{{$errors->first('no_induk')}}</span>
-                                                        @endif
-                                                        <h5 style="margin-left: 20px; font-style: italic;">* No Induk tidak boleh kosong !</h5>
-                                                    </div>
-                                            </div>
-                                            <div class="col-md-8">
-                                                    <div class="form-group {{$errors->has('nama_siswa') ? ' has-error' : ''}}">
-                                                        <label for="nama_siswa">Nama siswa</label>
-                                                        <input name ="nama_siswa" type="text" class="form-control"
-                                                        value="{{ $siswa->nama_siswa }}">
-                                                        @if ($errors->has('nama_siswa'))
-                                                                <span class="help-block">{{$errors->first('nama_siswa')}}</span>
-                                                        @endif
-                                                        <h5 style="margin-left: 20px; font-style: italic;">* Nama siswa tidak boleh kosong !</h5>
-                                                    </div>
-                                            </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                                <div class="form-group {{$errors->has('no_induk') ? ' has-error' : ''}}">
+                                                    <label for="no_induk">No Induk</label>
+                                                    <input name ="no_induk" type="text" class="form-control" value="{{ $siswa->no_induk }}">
+                                                    @if ($errors->has('no_induk'))
+                                                            <span class="help-block">{{$errors->first('no_induk')}}</span>
+                                                    @endif
+                                                </div>
                                         </div>
-                                    @endif
+                                        <div class="col-md-8">
+                                                <div class="form-group {{$errors->has('nama_siswa') ? ' has-error' : ''}}">
+                                                    <label for="nama_siswa">Nama siswa</label>
+                                                    <input name ="nama_siswa" type="text" class="form-control"
+                                                    value="{{ $siswa->nama_siswa }}">
+                                                    @if ($errors->has('nama_siswa'))
+                                                            <span class="help-block">{{$errors->first('nama_siswa')}}</span>
+                                                    @endif
+                                                </div>
+                                        </div>
+                                    </div>
 
                                     <div class="row">
                                           <div class="col-md-6">
@@ -89,7 +85,6 @@
                                                       @if ($errors->has('jk'))
                                                             <span class="help-block">{{$errors->first('jk')}}</span>
                                                       @endif
-                                                      <h5 style="margin-left: 20px; font-style: italic;">* Pilih Jenis Kelamin !</h5>
                                                 </div>
                                           </div>
                                           <div class="col-md-3">
@@ -107,7 +102,7 @@
                                                       @if ($errors->has('agama'))
                                                             <span class="help-block">{{$errors->first('agama')}}</span>
                                                       @endif
-                                                      <h5 style="margin-left: 20px; font-style: italic;">* Agama wajib dipilih !</h5>
+
                                                 </div>
                                                 <!-- End Combo Box -->
                                           </div>
@@ -118,7 +113,7 @@
                                                       @if ($errors->has('no_telp'))
                                                             <span class="help-block">{{$errors->first('no_telp')}}</span>
                                                       @endif
-                                                      <h5 style="margin-left: 20px; font-style: italic;">* Isi No Telepon dengan Benar !</h5>
+
                                                 </div>
                                           </div>
                                     </div>
@@ -131,9 +126,15 @@
                                                 @if ($errors->has('alamat'))
                                                       <span class="help-block">{{$errors->first('alamat')}}</span>
                                                 @endif
-                                                <h5 style="margin-left: 20px; font-style: italic;">* Alamat Wajib Diisi, min. 8 karakter dan maks. 100 karakter !</h5>
+
                                                 </div>
                                           </div>
+                                    </div>
+
+                                    <!--Edit Avatar-->
+                                    <div class="form-group">
+                                        <label for="exampleFormControlTextarea1">Foto Profil</label>
+                                        <input type="file" name="foto_profil" class="form-control">
                                     </div>
 
                                     <div class="modal-footer">

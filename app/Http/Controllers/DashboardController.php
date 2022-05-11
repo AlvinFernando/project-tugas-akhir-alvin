@@ -19,7 +19,7 @@ class DashboardController extends Controller
         $guru = Guru::all();
         $siswa = Siswa::all();
         $kelas = Kelas::all();
-        $materi = Materi::all();
+        $materi = Materi::where('users_id', Auth::user()->id);
         $pengumumans = Pengumuman::paginate(5);
         return view('dashboards.index', compact('guru', 'siswa', 'kelas', 'pengumumans', 'materi', 'userLogin'));
     }

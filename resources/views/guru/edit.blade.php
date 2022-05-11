@@ -25,7 +25,7 @@
                                                         @if ($errors->has('email'))
                                                             <span class="help-block">{{$errors->first('email')}}</span>
                                                         @endif
-                                                        <h6 style="margin-left: 20px; font-style: italic; color:rgb(31, 31, 31);">* Isi Email dengan benar !</h6>
+
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -35,7 +35,7 @@
                                                     @if ($errors->has('password'))
                                                         <span class="help-block"></span>
                                                     @endif
-                                                    <h6 style="margin-left: 20px; font-style: italic; color:rgb(31, 31, 31);">* Silahkan buat passwordnya !</h6>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -56,7 +56,7 @@
                                                       @if ($errors->has('nama_guru'))
                                                             <span class="help-block">{{$errors->first('nama_guru')}}</span>
                                                       @endif
-                                                      <h5 style="margin-left: 20px; font-style: italic;">* Ubah Nama Guru !</h5>
+
                                                 </div>
                                           </div>
                                     </div>
@@ -75,7 +75,7 @@
                                                       @if ($errors->has('jk'))
                                                             <span class="help-block">{{$errors->first('jk')}}</span>
                                                       @endif
-                                                      <h5 style="margin-left: 20px; font-style: italic; color:darkgray;">* Pilih Jenis Kelamin !</h5>
+
                                                 </div>
                                           </div>
 
@@ -95,7 +95,7 @@
                                                       @if ($errors->has('agama'))
                                                             <span class="help-block">{{$errors->first('agama')}}</span>
                                                       @endif
-                                                      <h5 style="margin-left: 20px; font-style: italic; color:darkgray;">* Agama wajib dipilih !</h5>
+
                                                 </div>
                                                 <!-- End Combo Box -->
                                           </div>
@@ -108,7 +108,7 @@
                                                       @if ($errors->has('no_telp'))
                                                             <span class="help-block">{{$errors->first('no_telp')}}</span>
                                                       @endif
-                                                      <h5 style="margin-left: 20px; font-style: italic; color:darkgray;">* Isi No Telepon dengan Benar !</h5>
+
                                                 </div>
                                           </div>
                                     </div>
@@ -121,7 +121,7 @@
                                                 @if ($errors->has('alamat'))
                                                       <span class="help-block">{{$errors->first('alamat')}}</span>
                                                 @endif
-                                                <h5 style="margin-left: 20px; font-style: italic; color:darkgray;">* Alamat Wajib Diisi, min. 8 karakter dan maks. 100 karakter !</h5>
+                                                
                                                 </div>
                                           </div>
                                     </div>

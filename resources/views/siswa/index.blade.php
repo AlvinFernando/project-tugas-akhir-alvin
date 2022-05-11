@@ -62,15 +62,17 @@
                                                 <form action="{{ route('siswa.destroy', $r->id )}}" method="POST" style="margin-left: -10px;">
                                                     @csrf
                                                     @method('delete')
-                                                    <a href="#" class="btn btn-info btn-sm" style="width: 20px;">
+                                                    <a href="{{ route('profil_siswa', $r->id) }}" class="btn btn-info btn-sm" style="width: 20px;">
                                                         <i class="fas fa-eye fa-lg" aria-hidden="true" style="margin-left: -9px;"></i>
                                                     </a>
-                                                    <a href="{{ route('siswa.edit', $r->id ) }}" class="btn btn-warning btn-sm" style="width: 20px;">
-                                                        <i class="fas fa-user-edit fa-lg" aria-hidden="true" style="margin-left: -8px;"></i>
-                                                    </a>
-                                                    <button type="submit" class="btn btn-danger btn-sm" style="width: 20px;">
-                                                        <i class="fas fa-trash-alt fa-lg" aria-hidden="true" style="margin-left: -7px;"></i>
-                                                    </button>
+                                                    @if (Auth::user()->level == 'admin')
+                                                        <a href="{{ route('siswa.edit', $r->id ) }}" class="btn btn-warning btn-sm" style="width: 20px;">
+                                                            <i class="fas fa-user-edit fa-lg" aria-hidden="true" style="margin-left: -8px;"></i>
+                                                        </a>
+                                                        <button type="submit" class="btn btn-danger btn-sm" style="width: 20px;">
+                                                            <i class="fas fa-trash-alt fa-lg" aria-hidden="true" style="margin-left: -7px;"></i>
+                                                        </button>
+                                                    @endif
                                                 </form>
                                           </td>
                                     </tr>
@@ -84,4 +86,7 @@
             </div>
       </div>
 
+      <div class="float-right">
+        {{ $siswa->links() }}
+  </div>
 @endsection

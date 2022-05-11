@@ -43,7 +43,7 @@
                                                 margin-left: 10px;
                                                 width:70px; height: 70px;">
                                     </div>
-                                    <div class="col-sm-10">
+                                    <div class="col-sm-9">
                                         <h3 style="padding: -10px;">{{ $r->users->name }}</h3>
                                         <h3 style="margin-top: 5px; ">{{ $r->mapel['nama_mapel'] }} - Kelas {{ $r->kelas['nama_kelas'] }}</h3>
                                         <div style="margin-top: -20px;">
@@ -55,21 +55,24 @@
                                                     {{ $r->updated_at->diffForHumans() }}
                                                 </p>
                                             </div>
-                                            <div class="controls">
-                                                <form action="{{ route('materi.destroy', $r->id )}}" method="POST">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <a href="{{ route('materi.show', $r->id) }}" class="btn btn-info btn-sm" style="width: 20px;">
-                                                    <i class="fas fa-eye fa-lg" aria-hidden="true" style="margin-left: -9px;"></i>
-                                                    </a>
-                                                    <a href="{{ route('materi.edit', $r->id ) }}" class="btn btn-warning btn-sm" style="width: 20px;">
-                                                    <i class="fas fa-edit fa-lg" aria-hidden="true" style="margin-left: -9px;"></i>
-                                                    </a>
-                                                    <button type="submit" class="btn btn-danger btn-sm" style="width: 20px;">
-                                                    <i class="fas fa-trash-alt fa-lg" aria-hidden="true" style="margin-left: -9px;"></i>
-                                                    </button>
-                                                </form>
-                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <div class="controls" style="margin-top: 50px;">
+                                            <form action="{{ route('materi.destroy', $r->id )}}" method="POST">
+                                                @csrf
+                                                @method('delete')
+                                                <a href="{{ route('materi.show', $r->id) }}" class="btn btn-info btn-sm" style="width: 20px;">
+                                                    <i class="fas fa-eye fa-lg" aria-hidden="true" style="margin-left: -8px;"></i>
+                                                </a>
+                                                <a href="{{ route('materi.edit', $r->id ) }}" class="btn btn-warning btn-sm" style="width: 20px;">
+                                                    <i class="fas fa-edit fa-lg" aria-hidden="true" style="margin-left: -8px;"></i>
+                                                </a>
+                                                <button type="submit" class="btn btn-danger btn-sm" style="width: 20px; margin-left: 5px;">
+                                                    <i class="fas fa-trash-alt fa-lg" aria-hidden="true" style="margin-left: -8px;"></i>
+                                                </button>
+                                            </form>
                                         </div>
                                     </div>
                                 </li>
@@ -79,7 +82,7 @@
                 </div>
             </div>
         </div>
-        {{ $materi->links() }}
+        {{-- {{ $materi->links() }} --}}
     </div>
 </div>
 

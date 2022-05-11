@@ -23,7 +23,7 @@
                                                     @if ($errors->has('email'))
                                                           <span class="help-block">{{$errors->first('email')}}</span>
                                                     @endif
-                                                    <h6 style="margin-left: 20px; font-style: italic; color:rgb(31, 31, 31);">* Isi Email dengan benar !</h6>
+
                                               </div>
                                         </div>
                                         <div class="col-md-6">
@@ -33,7 +33,7 @@
                                                     @if ($errors->has('password'))
                                                           <span class="help-block"></span>
                                                     @endif
-                                                    <h6 style="margin-left: 20px; font-style: italic; color:rgb(31, 31, 31);">* Silahkan buat passwordnya !</h6>
+
                                               </div>
                                         </div>
                                     </div>
@@ -47,7 +47,7 @@
                                                       @if ($errors->has('kode_guru'))
                                                             <span class="help-block">{{$errors->first('kode_guru')}}</span>
                                                       @endif
-                                                      <h6 style="margin-left: 20px; font-style: italic; color:rgb(31, 31, 31);">* Kode Guru wajib diisi !</h6>
+
                                                 </div>
                                           </div>
                                           <div class="col-md-9">
@@ -58,7 +58,7 @@
                                                       @if ($errors->has('nama_guru'))
                                                             <span class="help-block">{{$errors->first('nama_guru')}}</span>
                                                       @endif
-                                                      <h6 style="margin-left: 20px; font-style: italic; color:rgb(31, 31, 31);">* Nama Guru wajib diisi !</h6>
+
                                                 </div>
                                           </div>
                                     </div>
@@ -76,7 +76,7 @@
                                                       @if ($errors->has('jk'))
                                                             <span class="help-block"></span>
                                                       @endif
-                                                      <h6 style="margin-left: 20px; font-style: italic; color:rgb(31, 31, 31);">* Pilih Jenis Kelamin !</h6>
+
                                                 </div>
                                           </div>
 
@@ -95,7 +95,7 @@
                                                       @if ($errors->has('agama'))
                                                             <span class="help-block">{{$errors->first('agama')}}</span>
                                                       @endif
-                                                      <h6 style="margin-left: 20px; font-style: italic; color:rgb(63, 63, 63);">* Agama wajib dipilih !</h6>
+                                                      
                                                 </div>
                                                 <!-- End Combo Box -->
                                           </div>
@@ -109,7 +109,7 @@
                                                       @if ($errors->has('no_telp'))
                                                             <span class="help-block">{{$errors->first('no_telp')}}</span>
                                                       @endif
-                                                      <h6 style="margin-left: 20px; font-style: italic; color:rgb(31, 31, 31);">* No Telepon Wajib diisi !</h6>
+
                                                 </div>
                                           </div>
                                     </div>
@@ -123,7 +123,7 @@
                                                     @if ($errors->has('alamat'))
                                                         <span class="help-block">{{$errors->first('alamat')}}</span>
                                                     @endif
-                                                    <h6 style="margin-left: 20px; font-style: italic; color:rgb(31, 31, 31);">* Alamat Wajib Diisi, min. 8 karakter dan maks. 100 karakter !</h6>
+
                                                     </div>
                                             </div>
                                     </div>

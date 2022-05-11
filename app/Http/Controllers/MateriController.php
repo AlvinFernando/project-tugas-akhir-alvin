@@ -10,6 +10,7 @@ use App\Kelas;
 use App\Siswa;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Http\Request;
 
@@ -24,7 +25,7 @@ class MateriController extends Controller
     {
         //User yang sedang Login
         $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
-        $materi = Materi::where('users_id', Auth::user()->id)->with('files')->paginate(10);
+        $materi = Materi::where('users_id', Auth::user()->id)->with('files')->paginate(10)->sortByDesc('created_at');
         // //Guru yang Login
         // $guru = Guru::where('user_id', auth()->user()->id)->first();
 
@@ -194,7 +195,7 @@ class MateriController extends Controller
     public function update(Request $request, $id)
     {
         //
-        //dd($request->all());
+        dd($request->all());
         $errors = [
             'required' => ':attribute wajib diisi !',
             'min' => ':attribute harus diisi dengan minimal :min karakter !',
@@ -206,7 +207,7 @@ class MateriController extends Controller
             'judul_materi' => 'required|max:100',
             'mapel_id' => 'required',
             'isi_materi' => 'required',
-            'file_materi.*' => 'required|mimes:doc,docx,PDF,xlsx,pdf,jpg,jpeg,png|max:2000',
+            'file_materi.*' => 'required|mimes:doc,docx,PDF,xlsx,pdf,jpg,jpeg,png|max:20000',
             'kelas_id' => 'required'
         ], $errors);
 
@@ -222,9 +223,10 @@ class MateriController extends Controller
 
         Materi::whereId($id)->update($materi_data);
 
+        //===================================================
+
         if ($request->hasFile('file_materi')) {
             foreach ($request->file_materi as $file) {
-
                 //nama file original
                 $name = $file->getClientOriginalName();
 
@@ -239,6 +241,10 @@ class MateriController extends Controller
                     'file'=>$name,
                     'materi_id' => $materi->id,
                 ]);
+
+                $file = FileUpload::findOrFail($id);
+                Storage::delete($file->file);
+                $file->delete();
            }
         }
 
@@ -280,9 +286,9 @@ class MateriController extends Controller
         $userLogin = User::where('id', auth()->user()->id)->with(['siswa', 'guru', 'admin'])->get();
         $mapels = Mapel::findOrFail($id);
         $siswa = Siswa::where('user_id', auth()->user()->id)->first();
-        $materi = Materi::with('files')->where('kelas_id', $siswa->kelas_id)->orWhere('mapel_id', $mapels->id)->paginate(10);
+        $materis = Materi::with('files')->where('kelas_id', $siswa->kelas_id)->orWhere('mapel_id', $mapels->id)->paginate(10);
         $kelas = Kelas::all();
-        return view('mapel_siswa.index_materi', compact('materi', 'siswa', 'userLogin', 'mapels', 'kelas'));
+        return view('mapel_siswa.index_materi', compact('materis', 'siswa', 'userLogin', 'mapels', 'kelas'));
     }
 
     public function show_materi_siswa($id)

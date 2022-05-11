@@ -12,8 +12,8 @@
                         <a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-user"></i> <span>Manajemen User</span> <i class="icon-submenu lnr lnr-chevron-left float-right"></i></a>
                         <div id="subPages" class="collapse">
                             <ul class="nav">
-                                <li><a href="{{ route('admin.index') }}" class=""></i> <span>Data Admin</span></a></li>
-                                <li><a href="{{ route('kepsek.index') }}" class=""><span>Data Kepala Sekolah</span></a></li>
+                                {{-- <li><a href="{{ route('admin.index') }}" class=""></i> <span>Data Admin</span></a></li> --}}
+                                {{-- <li><a href="{{ route('kepsek.index') }}" class=""><span>Data Kepala Sekolah</span></a></li> --}}
                                 <li><a href="{{ route('guru.index') }}" class=""></i> <span>Data Guru</span></a></li>
                                 <li><a href="{{ route('siswa.index') }}" class=""><span>Data Siswa</span></a></li>
                             </ul>
@@ -56,7 +56,6 @@
                         <div id="subPages" class="collapse">
                             <ul class="nav">
                                 <li><a href="{{ route('list_mapel_siswa') }}" class=""> <span>Mata Pelajaran</span></a></li>
-                                <li><a href="#" class=""><span>Tugas Siswa</span></a></li>
                                 <li><a href="{{ route('agenda_siswa') }}" class=""><span>Agenda Siswa</span></a></li>
                             </ul>
                         </div>

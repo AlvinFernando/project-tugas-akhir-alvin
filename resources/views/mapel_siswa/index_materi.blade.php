@@ -9,13 +9,14 @@
 </div>
 @stop
 @section('content')
+
     <div class="row">
         <div class="col-bg-12">
             <div class="col-md-12" style="margin-top: auto; margin-bottom: 10px;">
                 <a href="{{ route('halaman_materi_siswa', $mapels->id) }}" class="bg-success text-white" style="padding: 10px; color: white;">
                     <i class="fas fa-eye fa-md" aria-hidden="true" style="margin-left: 2px;"></i> &nbsp;MATERI SISWA
                 </a>
-                <a href="#" class="bg-primary text-white" style="padding: 10px; color: white; margin-left: 10px;">
+                <a href="{{ route('halaman_tugas_siswa', $mapels->id) }}" class="bg-primary text-white" style="padding: 10px; color: white; margin-left: 10px;">
                     <i class="fas fa-eye fa-md" aria-hidden="true" style="margin-left: 2px;"></i> &nbsp;TUGAS SISWA
                 </a>
             </div>
@@ -29,7 +30,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <ul class="list-unstyled todo-list">
-                                    @foreach ($materi as $result => $r)
+                                    @foreach ($materis as $result => $r)
                                         @if ($r->mapel == $mapels)
                                             <li>
                                                 <div class="col-sm-2">
@@ -66,7 +67,7 @@
                         </div>
                     </div>
                 </div>
-                {{ $materi->links() }}
+                {{ $materis->links() }}
             </div>
         </div>
     </div>
